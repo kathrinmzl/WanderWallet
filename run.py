@@ -45,10 +45,21 @@ def get_worksheet_dict(sheet_name):
     sheet = SHEET.worksheet(sheet_name)
     sheet_list = sheet.get_all_values()
 
+    print(sheet_list)
+
     if len(sheet_list) == 2:
         keys, values = sheet_list
         sheet_dict = dict(zip(keys, values))
-    else: # only headings
+    
+    elif len(sheet_list) > 2:
+        # Extract keys and rows
+        keys = sheet_list[0]       # ['date', 'amount']
+        rows = sheet_list[1:]      # [['h', '1212'], ['s', '3435']]
+
+        # Create dict with list comprehensions
+        sheet_dict = {key: [row[i] for row in rows] for i, key in enumerate(keys)}        
+
+    else:  # only headings
         sheet_dict = dict.fromkeys(sheet_list[0], "")
     
     return sheet_dict 
@@ -178,16 +189,19 @@ def new_trip_info_valid(data_input, data_type):
         return True
 
 
-def calculate_duration(new_trip_info):
-    start_date = datetime.strptime(new_trip_info["start_date"], "%Y-%m-%d").date()
-    end_date = datetime.strptime(new_trip_info["end_date"], "%Y-%m-%d").date()
+def calculate_duration(trip_info):
+    """
+    Calculate duration
+    """
+    start_date = datetime.strptime(trip_info["start_date"], "%Y-%m-%d").date()
+    end_date = datetime.strptime(trip_info["end_date"], "%Y-%m-%d").date()
 
     # Add 1 to include the first and last days both
     duration = (end_date-start_date).days + 1
 
     return duration
 
-# def calculate_daily_budget(new_trip_info):
+
 
 def main():
     """
@@ -196,6 +210,8 @@ def main():
     print("Welcome to WanderWallet your personal Travel Expense Tracker\n")
     trip_info = get_worksheet_dict("trip_info")
     expenses = get_worksheet_dict("expenses")
+    print(trip_info)
+    print(expenses)
 
     trip_found = trip_exists(trip_info)
     if trip_found:
@@ -205,11 +221,13 @@ def main():
         # Get basic info for new trip
         # print("Get new trip info")
         new_trip_info = get_new_trip_info()
-        print(new_trip_info)
-        print(trip_info)
+        # print(new_trip_info)
+        # print(trip_info)
 
         duration = calculate_duration(new_trip_info)
-        print(duration)
+        # print(duration)
+        daily_budget = calculate_daily_budget(new_trip_info, duration)
+        # print(daily_budget)
 
 
 
