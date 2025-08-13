@@ -227,8 +227,11 @@ def calculate_total_spent(expenses):
     """
     Calculate total expenses
     """
-    total_spent = sum(int(num) for num in expenses["amount"]) 
-    
+    if not isinstance(expenses["amount"], list):
+        total_spent = int(expenses["amount"])
+    else:
+        total_spent = sum(int(num) for num in expenses["amount"])
+
     return total_spent
 
 
@@ -249,6 +252,17 @@ def calculate_days_left(trip_info):
 
     return days_left
 
+
+def calculate_avg_daily_spent(total_spent, duration, days_left):
+    """
+    Calculate avg daily expenses
+    """
+    days_spent = duration - days_left
+    print(total_spent)
+    print(days_spent)
+    avg_daily_spent = total_spent/days_spent
+
+    return avg_daily_spent
 
 
 def main():
@@ -276,12 +290,16 @@ def main():
         duration = calculate_duration(new_trip_info)
         # print(duration)
         daily_budget = calculate_daily_budget(new_trip_info, duration)
-        # print(daily_budget)
+        print("daily budget")
+        print(daily_budget)
         total_spent = calculate_total_spent(expenses)
-        # print(total_spent)
+        print("total spent")
+        print(total_spent)
         remaining_budget = calculate_remaining_budget(new_trip_info, total_spent)
         days_left = calculate_days_left(new_trip_info)
-        print(days_left)
+        # print(days_left)
+        avg_daily_spent = calculate_avg_daily_spent(total_spent, duration, days_left)
+        print(avg_daily_spent)
 
 
 
