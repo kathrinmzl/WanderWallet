@@ -98,7 +98,8 @@ def get_new_trip_info():
     while True:
         
         print("When are you taking your trip?")
-        print("Please enter the beginning and end date for your new trip.")
+        print("Please enter the start and end date for your new trip.")
+        print("The start date cannot be a past date.")
         print("The dates should be seperated by a comma and have the Format YYYY-MM-DD")
         print("Please type in the start date first!")
         print("Example: 2025-08-01,2025-08-15")
@@ -167,9 +168,18 @@ def new_trip_info_valid(data_input, data_type):
                 ) 
 
             # Check if end date is later than start date
-            if datetime_input[1] <= datetime_input[0]:
+            start_date = datetime_input[0]
+            end_date = datetime_input[1]
+            if end_date <= start_date:
                 raise ValueError(
                     "Your start date needs to be at least one day before your end date"
+                )
+
+            # Check if travel dates are in the future 
+            today = datetime.now().date()
+            if today > start_date:
+                raise ValueError(
+                    "Your trip cannot start in the past"
                 ) 
             
         except ValueError as e:
