@@ -258,11 +258,23 @@ def calculate_avg_daily_spent(total_spent, duration, days_left):
     Calculate avg daily expenses
     """
     days_spent = duration - days_left
-    print(total_spent)
-    print(days_spent)
     avg_daily_spent = total_spent/days_spent
 
     return avg_daily_spent
+
+
+def calculate_budget_status(daily_budget, avg_daily_spent):
+    """
+    Calculate budget status
+    """
+    if avg_daily_spent > daily_budget:
+        budget_status = "over"
+    elif avg_daily_spent < daily_budget:
+        budget_status = "under"
+    else:
+        budget_status = "on"
+    
+    return budget_status
 
 
 def main():
@@ -293,13 +305,18 @@ def main():
         print("daily budget")
         print(daily_budget)
         total_spent = calculate_total_spent(expenses)
-        print("total spent")
-        print(total_spent)
+
         remaining_budget = calculate_remaining_budget(new_trip_info, total_spent)
         days_left = calculate_days_left(new_trip_info)
         # print(days_left)
         avg_daily_spent = calculate_avg_daily_spent(total_spent, duration, days_left)
+        print("avg daily spent")
         print(avg_daily_spent)
+
+        budget_status = calculate_budget_status(daily_budget, avg_daily_spent)
+        print("budget_status")
+        print(budget_status)
+
 
 
 
