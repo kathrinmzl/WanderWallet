@@ -222,6 +222,11 @@ def calculate_total_spent(expenses):
     return total_spent
 
 
+def calculate_remaining_budget(trip_info, total_spent):
+    remaining_budget = int(trip_info["total_budget"]) - total_spent
+
+    return remaining_budget
+
 def main():
     """
     Main function that runs all program functions
@@ -250,6 +255,7 @@ def main():
         # print(daily_budget)
         total_spent = calculate_total_spent(expenses)
         # print(total_spent)
+        remaining_budget = calculate_remaining_budget(new_trip_info)
 
 
 
