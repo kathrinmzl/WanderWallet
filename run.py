@@ -16,37 +16,6 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('wander_wallet')
 
-# Test data access
-# trip_info_sheet = SHEET.worksheet("trip_info")
-# trip_info = trip_info_sheet.get_all_values()
-# print(trip_info)
-# if len(trip_info) == 2:
-#     keys, values = trip_info
-#     my_dict = dict(zip(keys, values))
-#     print(my_dict)
-# else: # only headings
-#     my_dict = dict.fromkeys(trip_info[0], "")
-#     print(my_dict)
-
-# expenses_sheet = SHEET.worksheet("expenses")
-# expenses = expenses_sheet.get_all_values()
-# print(expenses)
-# print(len(expenses))
-# print(len(expenses[0]))
-
-def get_worksheet_dict(sheet_name):
-    sheet = SHEET.worksheet(sheet_name)
-    sheet_list = sheet.get_all_values()
-
-    if len(sheet_list) == 2:
-        keys, values = sheet_list
-        sheet_dict = dict(zip(keys, values))
-    else: # only headings
-        sheet_dict = dict.fromkeys(sheet_list[0], "")
-    
-    return sheet_dict
-
-
 # def sheet_valid(sheet_data, sheet_name):
 #     """
 #     """
@@ -67,7 +36,22 @@ def get_worksheet_dict(sheet_name):
 # print(sheetvalid)
 
 # if not sheetvalid:
+
+
+def get_worksheet_dict(sheet_name):
+    """
+    Get worksheet data and transform it into a dictionary
+    """
+    sheet = SHEET.worksheet(sheet_name)
+    sheet_list = sheet.get_all_values()
+
+    if len(sheet_list) == 2:
+        keys, values = sheet_list
+        sheet_dict = dict(zip(keys, values))
+    else: # only headings
+        sheet_dict = dict.fromkeys(sheet_list[0], "")
     
+    return sheet_dict 
 
 
 def trip_exists(trip_info_data):
@@ -194,6 +178,17 @@ def new_trip_info_valid(data_input, data_type):
         return True
 
 
+def calculate_duration(new_trip_info):
+    start_date = datetime.strptime(new_trip_info["start_date"], "%Y-%m-%d").date()
+    end_date = datetime.strptime(new_trip_info["end_date"], "%Y-%m-%d").date()
+
+    # Add 1 to include the first and last days both
+    duration = (end_date-start_date).days + 1
+
+    return duration
+
+# def calculate_daily_budget(new_trip_info):
+
 def main():
     """
     Main function that runs all program functions
@@ -213,9 +208,8 @@ def main():
         print(new_trip_info)
         print(trip_info)
 
-    # new_trip_info = get_new_trip_info()
-    # print(new_trip_info)
-    # print(trip_info)
+        duration = calculate_duration(new_trip_info)
+        print(duration)
 
 
 
