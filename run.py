@@ -233,9 +233,23 @@ def calculate_total_spent(expenses):
 
 
 def calculate_remaining_budget(trip_info, total_spent):
+    """
+    Calculate remaining budget
+    """
     remaining_budget = int(trip_info["total_budget"]) - total_spent
 
     return remaining_budget
+
+
+def calculate_days_left(trip_info):
+    """
+    Calculate remaining days
+    """
+    days_left = (datetime.strptime(trip_info["end_date"], "%Y-%m-%d").date() - datetime.now().date()).days
+
+    return days_left
+
+
 
 def main():
     """
@@ -265,7 +279,9 @@ def main():
         # print(daily_budget)
         total_spent = calculate_total_spent(expenses)
         # print(total_spent)
-        remaining_budget = calculate_remaining_budget(new_trip_info)
+        remaining_budget = calculate_remaining_budget(new_trip_info, total_spent)
+        days_left = calculate_days_left(new_trip_info)
+        print(days_left)
 
 
 
