@@ -45,7 +45,7 @@ def get_worksheet_dict(sheet_name):
     sheet = SHEET.worksheet(sheet_name)
     sheet_list = sheet.get_all_values()
 
-    print(sheet_list)
+    # print(sheet_list)
 
     if len(sheet_list) == 2:
         keys, values = sheet_list
@@ -201,6 +201,7 @@ def calculate_duration(trip_info):
 
     return duration
 
+
 def calculate_daily_budget(trip_info, duration):
     """
     Calculate daily budget
@@ -212,6 +213,14 @@ def calculate_daily_budget(trip_info, duration):
     return daily_budget
 
 
+def calculate_total_spent(expenses):
+    """
+    Calculate total expenses
+    """
+    total_spent = sum(int(num) for num in expenses["amount"]) 
+    
+    return total_spent
+
 
 def main():
     """
@@ -220,8 +229,9 @@ def main():
     print("Welcome to WanderWallet your personal Travel Expense Tracker\n")
     trip_info = get_worksheet_dict("trip_info")
     expenses = get_worksheet_dict("expenses")
-    print(trip_info)
-    print(expenses)
+    # print(trip_info)
+    # print(expenses)
+    calculate_total_spent(expenses)
 
     trip_found = trip_exists(trip_info)
     if trip_found:
@@ -238,6 +248,8 @@ def main():
         # print(duration)
         daily_budget = calculate_daily_budget(new_trip_info, duration)
         # print(daily_budget)
+        total_spent = calculate_total_spent(expenses)
+        # print(total_spent)
 
 
 
