@@ -17,16 +17,34 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('wander_wallet')
 
 # Test data access
-trip_info_sheet = SHEET.worksheet("trip_info")
-trip_info = trip_info_sheet.get_all_values()
-print(trip_info)
+# trip_info_sheet = SHEET.worksheet("trip_info")
+# trip_info = trip_info_sheet.get_all_values()
+# print(trip_info)
+# if len(trip_info) == 2:
+#     keys, values = trip_info
+#     my_dict = dict(zip(keys, values))
+#     print(my_dict)
+# else: # only headings
+#     my_dict = dict.fromkeys(trip_info[0], "")
+#     print(my_dict)
 
-expenses_sheet = SHEET.worksheet("expenses")
-expenses = expenses_sheet.get_all_values()
+# expenses_sheet = SHEET.worksheet("expenses")
+# expenses = expenses_sheet.get_all_values()
 # print(expenses)
 # print(len(expenses))
 # print(len(expenses[0]))
 
+def get_worksheet_dict(sheet_name):
+    sheet = SHEET.worksheet(sheet_name)
+    sheet_list = sheet.get_all_values()
+
+    if len(sheet_list) == 2:
+        keys, values = sheet_list
+        sheet_dict = dict(zip(keys, values))
+    else: # only headings
+        sheet_dict = dict.fromkeys(sheet_list[0], "")
+    
+    return sheet_dict
 
 
 # def sheet_valid(sheet_data, sheet_name):
@@ -56,11 +74,11 @@ def trip_exists(trip_info_data):
     """
     Check if trip exists already
     """
-    # Only headings exist
-    if len(trip_info_data) == 1:
-        return False
-    else:
+    if trip_info_data["trip_name"] != "":
         return True
+    else:
+        # Only headings exist
+        return False
 
 
 def get_new_trip_info():
@@ -113,8 +131,10 @@ def get_new_trip_info():
             break
     
     new_trip_info = [trip_name_input, *trip_dates_list, trip_budget_input]
+    new_trip_info_keys = ['trip_name', 'start_date', 'end_date', 'total_budget']
 
-    return new_trip_info
+    new_trip_info_dict = dict(zip(new_trip_info_keys, new_trip_info))
+    return new_trip_info_dict
 
 
 def new_trip_info_valid(data_input, data_type):
@@ -179,6 +199,9 @@ def main():
     Main function that runs all program functions
     """
     print("Welcome to WanderWallet your personal Travel Expense Tracker\n")
+    trip_info = get_worksheet_dict("trip_info")
+    expenses = get_worksheet_dict("expenses")
+
     trip_found = trip_exists(trip_info)
     if trip_found:
         print("Seems like you have been working on a trip already. Do you want to continue?")
@@ -188,6 +211,12 @@ def main():
         # print("Get new trip info")
         new_trip_info = get_new_trip_info()
         print(new_trip_info)
+        print(trip_info)
+
+    # new_trip_info = get_new_trip_info()
+    # print(new_trip_info)
+    # print(trip_info)
+
 
 
 
