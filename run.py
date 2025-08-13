@@ -201,6 +201,16 @@ def calculate_duration(trip_info):
 
     return duration
 
+def calculate_daily_budget(trip_info, duration):
+    """
+    Calculate daily budget
+    """
+    total_budget = trip_info["total_budget"]
+
+    daily_budget = round(int(total_budget)/duration, ndigits=2)
+
+    return daily_budget
+
 
 
 def main():
