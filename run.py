@@ -444,8 +444,35 @@ class Trip:
                 print(f"\nInvalid data: {e}, please try again.\n")
                 continue
 
-              
             print("Data is valid!\n")
+
+            # Check if the date already exists in the database 
+            # Ask user if they want to update it if it already exists
+            if date_input in self.expenses["date"]:
+                old_date_index = self.expenses["date"].index(date_input)
+                old_amount = self.expenses["amount"][old_date_index]
+                while True:
+                    print(f"You already submitted an expense of {old_amount} € for {date_input}.\n")
+                    print("Do you want to update it?\n")
+                    update_date_input = input("Enter your decision here (yes/no): ")
+
+                    # Validate input
+                    try:
+                        update_date_input = update_date_input.lower()
+
+                        if update_date_input not in ["yes", "no"]:
+                            raise ValueError(
+                                f"'yes' or 'no' expected, you provided '{update_date_input}'"
+                                )    
+                    except ValueError as e:
+                        print(f"\nInvalid data: {e}, please try again.\n")
+                    print("Data is valid!\n")
+                    break
+                  
+                if update_date_input == "no":
+                    print("Okay, we will keep the old expense for this date.\n")
+                    return  # Exit the method without changing anything
+                
             break
 
         # Get amount input
@@ -454,19 +481,21 @@ class Trip:
             print("Please enter your expense in whole numbers in Euros (no cents or decimal points).")
             print("Example: 24")
 
-            date_input = input("\nEnter your expense here: ")
+            amount_input = input("\nEnter your expense here: ")
 
             # Validate amount input
             try:
                 # Check if provided string can be transformed to an int object
-                int(date_input)
+                int(amount_input)
             except ValueError:
                 print(f"\nInvalid data: Your budget is not a whole number, please try again.\n")
                 continue
               
             print("Data is valid!\n")
             break
-    
+
+        
+        
     
 def main():
     """
