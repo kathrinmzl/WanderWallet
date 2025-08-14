@@ -494,7 +494,20 @@ class Trip:
             print("Data is valid!\n")
             break
 
+        # Add/update expense amount to/in expense dict
+        if date_input in self.expenses["date"]:
+            # Update value in expenses dict if date already exists
+            date_index = self.expenses["date"].index(date_input)
+            self.expenses["amount"][date_index] = int(amount_input)
+            print(f"Updated expense for {date_input}.")
+        else:
+            # Add value in expenses dict if date doesn't exist yet
+            self.expenses["date"].append(date_input)
+            self.expenses["amount"].append(int(amount_input))
+            print(f"Added new expense for {date_input}.")
         
+        # Update trip_info dict with new expense data
+        self.update_trip_info()
         
     
 def main():
