@@ -274,7 +274,20 @@ class Trip:
         
         return budget_status
     
-   
+    def update_trip_info(self):
+        """
+        Updates the trip_info dict with current calculated values
+        """
+        self.trip_info["duration"] = self.duration
+        self.trip_info["daily_budget"] = self.daily_budget
+        self.trip_info["total_spent"] = self.total_spent
+        self.trip_info["remaining_budget"] = self.remaining_budget
+        self.trip_info["days_left"] = self.days_left
+        self.trip_info["avg_daily_spent"] = self.avg_daily_spent
+        self.trip_info["budget_status"] = self.budget_status
+
+        return self.trip_info
+    
     
 
 # def calculate_duration(trip_info):
@@ -362,7 +375,9 @@ def main():
         # Get basic info for new trip
         new_trip_info = get_new_trip_info()
         trip = Trip(new_trip_info, expenses)
+        trip.update_trip_info()
 
+        print(trip.trip_info)
 
 
 main()
