@@ -195,6 +195,17 @@ def new_trip_info_valid(data_input, data_type):
             return False
         
         return True
+    
+
+# Code from love_sandwiches project
+def update_worksheet(data, sheetname):
+    """
+    Update worksheet "sheetname", add new row with the list data provided
+    """
+    print(f"Updating {sheetname} worksheet...\n")
+    worksheet = SHEET.worksheet(sheetname)
+    worksheet.append_row(data)
+    print(f"{sheetname} worksheet updated successfully.\n")
 
 
 class Trip:
@@ -231,7 +242,7 @@ class Trip:
         """
         Calculate total expenses
         """
-        # if there are no expenses or max. 1 expense tracked, the "amount" is a single value instead of a list
+        # If there are no expenses or max. 1 expense tracked, the "amount" is a single value instead of a list
         if not isinstance(self.expenses["amount"], list):
             if self.expenses["amount"] == "":
                 return 0
@@ -310,7 +321,7 @@ class Trip:
 
             f"{'Daily Budget:':20} {self.daily_budget} €\n"
             f"{'Avg. Daily Expenses:':20} {self.avg_daily_spent} €\n"
-            f"{'Budget Status:':20} {self.budget_status}"
+            f"{'Budget Status:':20} {self.budget_status}\n"
         )
     
 
@@ -319,30 +330,32 @@ def main():
     Main function that runs all program functions
     """
     print("Welcome to WanderWallet your personal Travel Expense Tracker\n")
+    print("Checking if you have already started tracking travel expenses with us ...")
+
     trip_info = get_worksheet_dict("trip_info")
     expenses = get_worksheet_dict("expenses")
 
-    print("Checking if you have already started tracking travel expenses with us ...")
-
     if trip_exists(trip_info):
-        print("Seems like you have been working on a trip already. Do you want to continue?")
+        trip = Trip(trip_info, expenses)
+        print(f"Seems like you have been working on your trip '{trip.trip_name}' already.\n")
+        # Show trip summary
+        print("Here is a summary of your current trip information:")
+        print(trip.summary())
         # Go to function to input decision about continuing with current trip
+        
     else:
         print("No trip found. Let's set up a new trip.\n")
 
         # Get basic info for new trip
         new_trip_info = get_new_trip_info()
+        # Set up Trip class and calculate trip_info values
         trip = Trip(new_trip_info, expenses)
         trip.update_trip_info()
         # Save new trip info to worksheet
-        # todo ...
-        # print("\nTrip created successfully!\n")
-
+        update_worksheet(list(trip.trip_info.values()), "trip_info")
         # Show trip summary
-        print("Here is a summary of your initial trip information")
+        print("Here is a summary of your initial trip information:")
         print(trip.summary())
-
-        #print(trip.trip_info)
 
 
 main()
