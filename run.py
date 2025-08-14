@@ -197,7 +197,7 @@ def new_trip_info_valid(data_input, data_type):
         return True
     
 
-def continue_trip_decision():
+def continue_trip():
     """
     Get input if the user wants to continue with the current trip or start a new one
     """
@@ -214,8 +214,11 @@ def continue_trip_decision():
         if continue_trip_input_valid(continue_trip_input):
             print("Data is valid!\n")
             break
-
-    return continue_trip_input
+    
+    if continue_trip_input == "yes":
+        return True
+    else: 
+        return False
 
 
 def continue_trip_input_valid(data_input):
@@ -234,7 +237,20 @@ def continue_trip_input_valid(data_input):
         return False
         
     return True
-    
+
+
+def del_workheet_data(sheetname):
+    """
+    Delete all data from a worksheet, except the headings
+    """
+    print(f"Deleting data from {sheetname} worksheet...\n")
+    worksheet = SHEET.worksheet(sheetname)
+    n_rows = worksheet.row_count
+    # delete_rows only works if the rows actually exist
+    if n_rows >= 2:
+        worksheet.delete_rows(2, n_rows)
+    print(f"{sheetname} worksheet updated successfully.\n")
+
 
 # Code from love_sandwiches project
 def update_worksheet(data, sheetname):
@@ -245,6 +261,29 @@ def update_worksheet(data, sheetname):
     worksheet = SHEET.worksheet(sheetname)
     worksheet.append_row(data)
     print(f"{sheetname} worksheet updated successfully.\n")
+
+
+def start_new_trip(expenses):
+    """
+    Initialize new trip
+    """
+    print("No trip found. Let's set up a new trip.\n")
+    # Get basic info for new trip
+    new_trip_info = get_new_trip_info()
+    # Set up Trip class and calculate trip_info values
+    trip = Trip(new_trip_info, expenses)
+    trip.update_trip_info()
+    # Save new trip info to worksheet
+    # print("trip class values")
+    # print(trip.trip_info)
+    # print(trip.trip_info.values())
+    # print(list(trip.trip_info.values()))
+    update_worksheet(list(trip.trip_info.values()), "trip_info")
+    # Show trip summary
+    print("Here is a summary of your initial trip information:")
+    print(trip.summary())
+
+    return trip
 
 
 class Trip:
@@ -335,10 +374,10 @@ class Trip:
         Updates the trip_info dict with current calculated values
         """
         self.trip_info["duration"] = self.duration
-        self.trip_info["daily_budget"] = self.daily_budget
+        self.trip_info["days_left"] = self.days_left
         self.trip_info["total_spent"] = self.total_spent
         self.trip_info["remaining_budget"] = self.remaining_budget
-        self.trip_info["days_left"] = self.days_left
+        self.trip_info["daily_budget"] = self.daily_budget
         self.trip_info["avg_daily_spent"] = self.avg_daily_spent
         self.trip_info["budget_status"] = self.budget_status
 
@@ -381,20 +420,31 @@ def main():
         print("Here is a summary of your current trip information:")
         print(trip.summary())
         # Go to function to input decision about continuing with current trip
-        continue_trip_decision()
-    else:
-        print("No trip found. Let's set up a new trip.\n")
+        continue_trip_val = continue_trip()
+        # Delete old trip information if user decidess to start a new trip
+        if not continue_trip_val:
+            del_workheet_data("trip_info")
+            del_workheet_data("expenses")
+            # Set up new trip_info and expenses objects
+            trip_info = get_worksheet_dict("trip_info")
+            expenses = get_worksheet_dict("expenses")
+            # Start new trip
+            trip = start_new_trip(expenses)
 
-        # Get basic info for new trip
-        new_trip_info = get_new_trip_info()
-        # Set up Trip class and calculate trip_info values
-        trip = Trip(new_trip_info, expenses)
-        trip.update_trip_info()
-        # Save new trip info to worksheet
-        update_worksheet(list(trip.trip_info.values()), "trip_info")
-        # Show trip summary
-        print("Here is a summary of your initial trip information:")
-        print(trip.summary())
+    else:
+        trip = start_new_trip(expenses)
+        # print("No trip found. Let's set up a new trip.\n")
+
+        # # Get basic info for new trip
+        # new_trip_info = get_new_trip_info()
+        # # Set up Trip class and calculate trip_info values
+        # trip = Trip(new_trip_info, expenses)
+        # trip.update_trip_info()
+        # # Save new trip info to worksheet
+        # update_worksheet(list(trip.trip_info.values()), "trip_info")
+        # # Show trip summary
+        # print("Here is a summary of your initial trip information:")
+        # print(trip.summary())
 
 
 main()
