@@ -313,7 +313,7 @@ class Trip:
         """
         Calculate daily budget
         """
-        return round(self.total_budget/self.duration, ndigits=2)
+        return round(self.total_budget/self.duration)
     
     @property
     def total_spent(self):
@@ -362,7 +362,7 @@ class Trip:
         if days_spent == 0:
             return 0
 
-        return round(self.total_spent/days_spent, ndigits=2)
+        return round(self.total_spent/days_spent)
     
     @property
     def budget_status(self):
@@ -396,7 +396,14 @@ class Trip:
         """
         Return a summary of the current trip data
         """
-        # todo: Adjust how budget status is displayed? transform into more informative string for the summary?
+        # Adjust how budget status is display in summary
+        if self.budget_status == "over":
+            status_msg = "Over budget — try to slow down spending!"
+        elif self.budget_status == "under":
+            status_msg = "Under budget — great job managing your expenses!"
+        else: 
+            status_msg = "On track — keep spending balanced."
+            
         return (
             f"{'Trip Name:':20} {self.trip_name}\n"
             f"{'Dates:':20} {self.start_date} - {self.end_date} ({self.duration} days)\n"
@@ -408,7 +415,7 @@ class Trip:
 
             f"{'Daily Budget:':20} {self.daily_budget} €\n"
             f"{'Avg. Daily Expenses:':20} {self.avg_daily_spent} €\n"
-            f"{'Budget Status:':20} {self.budget_status}\n"
+            f"{'Budget Status:':20} {status_msg}\n"
         )
     
 
