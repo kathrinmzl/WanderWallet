@@ -197,6 +197,45 @@ def new_trip_info_valid(data_input, data_type):
         return True
     
 
+def continue_trip_decision():
+    """
+    Get input if the user wants to continue with the current trip or start a new one
+    """
+    # Trip Name Input
+    while True:
+        
+        print("Do you want to continue tracking expenses for this trip?")
+        print("If 'yes', you can add new expenses in the next step.")
+        print("If 'no', the current trip will be deleted and you can start with a new trip in the next step.")
+        print("Example: yes")
+
+        continue_trip_input = input("\nEnter your decision here (yes/no): ")
+
+        if continue_trip_input_valid(continue_trip_input):
+            print("Data is valid!\n")
+            break
+
+    return continue_trip_input
+
+
+def continue_trip_input_valid(data_input):
+    """
+    Check if continue trip input data is valid 
+    """
+    try:
+        data_input_val = data_input.lower()
+
+        if data_input_val not in ["yes", "no"]:
+            raise ValueError(
+                f"'yes' or 'no' expected, you provided '{data_input_val}'"
+                )    
+    except ValueError as e:
+        print(f"\nInvalid data: {e}, please try again.\n")
+        return False
+        
+    return True
+    
+
 # Code from love_sandwiches project
 def update_worksheet(data, sheetname):
     """
@@ -342,7 +381,7 @@ def main():
         print("Here is a summary of your current trip information:")
         print(trip.summary())
         # Go to function to input decision about continuing with current trip
-        
+        continue_trip_decision()
     else:
         print("No trip found. Let's set up a new trip.\n")
 
