@@ -288,6 +288,24 @@ class Trip:
 
         return self.trip_info
     
+    def summary(self):
+        """
+        Return a summary of the current trip data
+        """
+        # todo: Adjust how budget status is displayed? transform into more informative string for the summary?
+        return (
+            f"{'Trip Name:':20} {self.trip_name}\n"
+            f"{'Dates:':20} {self.start_date} - {self.end_date} ({self.duration} days)\n"
+            f"{'Days Left:':20} {self.days_left} days\n"
+
+            f"{'Total Budget:':20} {self.total_budget} €\n"
+            f"{'Total Expenses:':20} {self.total_spent} €\n"
+            f"{'Remaining Budget:':20} {self.remaining_budget} €\n"
+
+            f"{'Daily Budget:':20} {self.daily_budget} €\n"
+            f"{'Avgerage Daily Expenses:':20} {self.avg_daily_spent} €\n"
+            f"{'Budget Status:':20} {self.budget_status}"
+        )
     
 
 # def calculate_duration(trip_info):
@@ -376,6 +394,13 @@ def main():
         new_trip_info = get_new_trip_info()
         trip = Trip(new_trip_info, expenses)
         trip.update_trip_info()
+        # Save new trip info to worksheet
+        # todo ...
+        # print("\nTrip created successfully!\n")
+
+        # Show trip summary
+        print("Here is a summary of your initial trip information")
+        print(trip.summary())
 
         print(trip.trip_info)
 
