@@ -294,28 +294,16 @@ def main():
         # Go to function to input decision about continuing with current trip
     else:
         # Get basic info for new trip
-        # print("Get new trip info")
         new_trip_info = get_new_trip_info()
-        # print(new_trip_info)
-        # print(trip_info)
 
         duration = calculate_duration(new_trip_info)
-        # print(duration)
         daily_budget = calculate_daily_budget(new_trip_info, duration)
-        print("daily budget")
-        print(daily_budget)
         total_spent = calculate_total_spent(expenses)
-
         remaining_budget = calculate_remaining_budget(new_trip_info, total_spent)
         days_left = calculate_days_left(new_trip_info)
-        # print(days_left)
         avg_daily_spent = calculate_avg_daily_spent(total_spent, duration, days_left)
-        print("avg daily spent")
-        print(avg_daily_spent)
-
         budget_status = calculate_budget_status(daily_budget, avg_daily_spent)
-        print("budget_status")
-        print(budget_status)
+
 
 
 
