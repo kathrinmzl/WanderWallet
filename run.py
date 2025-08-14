@@ -80,8 +80,6 @@ def get_new_trip_info():
     """
     Get info for a new trip (start, end dates, trip name, budget)
     """
-    print("Are you ready to start tracking expenses for your next adventure?\n")
-
     # Trip Name Input
     while True:
         
@@ -110,7 +108,7 @@ def get_new_trip_info():
         trip_dates_list = [date.strip() for date in trip_dates_input.split(",")]
 
         if new_trip_info_valid(trip_dates_list, "trip_dates"):
-            print("Data is valid!")
+            print("Data is valid!\n")
             break
 
     # Trip Budget Input
@@ -199,82 +197,150 @@ def new_trip_info_valid(data_input, data_type):
         return True
 
 
-def calculate_duration(trip_info):
+class Trip:
     """
-    Calculate duration
+    Trip class
     """
-    start_date = datetime.strptime(trip_info["start_date"], "%Y-%m-%d").date()
-    end_date = datetime.strptime(trip_info["end_date"], "%Y-%m-%d").date()
+    def __init__(self, trip_info: dict, expenses: dict):
+        self.trip_info = trip_info
+        self.expenses = expenses
+        # Get trip info input fields (for calculations)
+        self.trip_name = trip_info["trip_name"]
+        self.start_date = datetime.strptime(trip_info["start_date"], "%Y-%m-%d").date()
+        self.end_date = datetime.strptime(trip_info["end_date"], "%Y-%m-%d").date()
+        self.total_budget = int(trip_info["total_budget"])
 
-    # Add 1 to include the first and last days both
-    duration = (end_date-start_date).days + 1
-
-    return duration
-
-
-def calculate_daily_budget(trip_info, duration):
-    """
-    Calculate daily budget
-    """
-    total_budget = trip_info["total_budget"]
-
-    daily_budget = round(int(total_budget)/duration, ndigits=2)
-
-    return daily_budget
-
-
-def calculate_total_spent(expenses):
-    """
-    Calculate total expenses
-    """
-    if not isinstance(expenses["amount"], list):
-        total_spent = int(expenses["amount"])
-    else:
-        total_spent = sum(int(num) for num in expenses["amount"])
-
-    return total_spent
-
-
-def calculate_remaining_budget(trip_info, total_spent):
-    """
-    Calculate remaining budget
-    """
-    remaining_budget = int(trip_info["total_budget"]) - total_spent
-
-    return remaining_budget
-
-
-def calculate_days_left(trip_info):
-    """
-    Calculate remaining days
-    """
-    days_left = (datetime.strptime(trip_info["end_date"], "%Y-%m-%d").date() - datetime.now().date()).days
-
-    return days_left
-
-
-def calculate_avg_daily_spent(total_spent, duration, days_left):
-    """
-    Calculate avg daily expenses
-    """
-    days_spent = duration - days_left
-    avg_daily_spent = total_spent/days_spent
-
-    return avg_daily_spent
-
-
-def calculate_budget_status(daily_budget, avg_daily_spent):
-    """
-    Calculate budget status
-    """
-    if avg_daily_spent > daily_budget:
-        budget_status = "over"
-    elif avg_daily_spent < daily_budget:
-        budget_status = "under"
-    else:
-        budget_status = "on"
+    # Calculate different properties for trip info 
+    @property
+    def duration(self):
+        """
+        Calculate duration
+        """
+        # Add 1 to include the first and last days both
+        return (self.end_date-self.start_date).days + 1
     
-    return budget_status
+    @property
+    def daily_budget(self):
+        """
+        Calculate daily budget
+        """
+        return round(self.total_budget/self.duration, ndigits=2)
+    
+    @property
+    def total_spent(self):
+        """
+        Calculate total expenses
+        """
+        if not isinstance(self.expenses["amount"], list):
+            total_spent_val = int(self.expenses["amount"])
+        else:
+            total_spent_val = sum(int(num) for num in self.expenses["amount"])
+
+        return total_spent_val
+    
+    @property
+    def remaining_budget(self):
+        """
+        Calculate remaining budget
+        """
+        return self.total_budget - self.total_spent
+    
+    @property
+    def days_left(self):
+        """
+        Calculate remaining days
+        """
+        return (self.end_date - datetime.now().date()).days
+    
+    @property
+    def avg_daily_spent(self):
+        """
+        Calculate avg daily expenses
+        """
+        days_spent = self.duration - self.days_left
+        return self.total_spent/days_spent
+    
+    @property
+    def budget_status(self):
+        """
+        Calculate budget status
+        """
+        if self.avg_daily_spent > self.daily_budget:
+            budget_status = "over"
+        elif self.avg_daily_spent < self.daily_budget:
+            budget_status = "under"
+        else:
+            budget_status = "on"
+        
+        return budget_status
+    
+   
+    
+
+# def calculate_duration(trip_info):
+#     """
+#     Calculate duration
+#     """
+#     start_date = datetime.strptime(trip_info["start_date"], "%Y-%m-%d").date()
+#     end_date = datetime.strptime(trip_info["end_date"], "%Y-%m-%d").date()
+
+#     # Add 1 to include the first and last days both
+#     duration = (end_date-start_date).days + 1
+
+#     return duration
+# def calculate_daily_budget(trip_info, duration):
+#     """
+#     Calculate daily budget
+#     """
+#     total_budget = trip_info["total_budget"]
+
+#     daily_budget = round(int(total_budget)/duration, ndigits=2)
+
+#     return daily_budget
+# def calculate_total_spent(expenses):
+#     """
+#     Calculate total expenses
+#     """
+#     if not isinstance(expenses["amount"], list):
+#         total_spent = int(expenses["amount"])
+#     else:
+#         total_spent = sum(int(num) for num in expenses["amount"])
+
+#     return total_spent
+# def calculate_remaining_budget(trip_info, total_spent):
+#     """
+#     Calculate remaining budget
+#     """
+#     remaining_budget = int(trip_info["total_budget"]) - total_spent
+
+#     return remaining_budget
+# def calculate_days_left(trip_info):
+#     """
+#     Calculate remaining days
+#     """
+#     days_left = (datetime.strptime(trip_info["end_date"], "%Y-%m-%d").date() - datetime.now().date()).days
+
+#     return days_left
+# def calculate_avg_daily_spent(total_spent, duration, days_left):
+#     """
+#     Calculate avg daily expenses
+#     """
+#     days_spent = duration - days_left
+#     avg_daily_spent = total_spent/days_spent
+
+#     return avg_daily_spent
+# def calculate_budget_status(daily_budget, avg_daily_spent):
+    # """
+    # Calculate budget status
+    # """
+    # if avg_daily_spent > daily_budget:
+    #     budget_status = "over"
+    # elif avg_daily_spent < daily_budget:
+    #     budget_status = "under"
+    # else:
+    #     budget_status = "on"
+    
+    # return budget_status
 
 
 def main():
@@ -284,33 +350,50 @@ def main():
     print("Welcome to WanderWallet your personal Travel Expense Tracker\n")
     trip_info = get_worksheet_dict("trip_info")
     expenses = get_worksheet_dict("expenses")
-    # print(trip_info)
-    # print(expenses)
-    calculate_total_spent(expenses)
 
-    trip_found = trip_exists(trip_info)
-    if trip_found:
+    print("Checking if you have already started tracking travel expenses with us ...")
+
+    if trip_exists(trip_info):
         print("Seems like you have been working on a trip already. Do you want to continue?")
         # Go to function to input decision about continuing with current trip
     else:
+        print("No trip found. Let's set up a new trip.\n")
+
         # Get basic info for new trip
         new_trip_info = get_new_trip_info()
-
-        duration = calculate_duration(new_trip_info)
-        daily_budget = calculate_daily_budget(new_trip_info, duration)
-        total_spent = calculate_total_spent(expenses)
-        remaining_budget = calculate_remaining_budget(new_trip_info, total_spent)
-        days_left = calculate_days_left(new_trip_info)
-        avg_daily_spent = calculate_avg_daily_spent(total_spent, duration, days_left)
-        budget_status = calculate_budget_status(daily_budget, avg_daily_spent)
-
-
-
-
+        trip = Trip(new_trip_info, expenses)
 
 
 
 main()
+
+
+# def main():
+#     """
+#     Main function that runs all program functions
+#     """
+#     print("Welcome to WanderWallet your personal Travel Expense Tracker\n")
+#     trip_info = get_worksheet_dict("trip_info")
+#     expenses = get_worksheet_dict("expenses")
+
+#     calculate_total_spent(expenses)
+
+#     trip_found = trip_exists(trip_info)
+#     if trip_found:
+#         print("Seems like you have been working on a trip already. Do you want to continue?")
+#         # Go to function to input decision about continuing with current trip
+#     else:
+#         # Get basic info for new trip
+#         new_trip_info = get_new_trip_info()
+
+#         duration = calculate_duration(new_trip_info)
+#         daily_budget = calculate_daily_budget(new_trip_info, duration)
+#         total_spent = calculate_total_spent(expenses)
+#         remaining_budget = calculate_remaining_budget(new_trip_info, total_spent)
+#         days_left = calculate_days_left(new_trip_info)
+#         avg_daily_spent = calculate_avg_daily_spent(total_spent, duration, days_left)
+#         budget_status = calculate_budget_status(daily_budget, avg_daily_spent)
+
 
 """
 Trip Name	Start Date	End Date	Total Budget	Total Spent	Remaining Budget	Daily Budget	Avg Daily Spent	Budget Status	Days Left
