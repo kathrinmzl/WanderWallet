@@ -258,7 +258,11 @@ class Trip:
         Calculate avg daily expenses
         """
         days_spent = self.duration - self.days_left
-        return self.total_spent/days_spent
+        # If trip hasn't started yet days_spent is 0
+        if days_spent == 0:
+            return 0
+
+        return round(self.total_spent/days_spent, ndigits=2)
     
     @property
     def budget_status(self):
@@ -303,76 +307,10 @@ class Trip:
             f"{'Remaining Budget:':20} {self.remaining_budget} €\n"
 
             f"{'Daily Budget:':20} {self.daily_budget} €\n"
-            f"{'Avgerage Daily Expenses:':20} {self.avg_daily_spent} €\n"
+            f"{'Avg. Daily Expenses:':20} {self.avg_daily_spent} €\n"
             f"{'Budget Status:':20} {self.budget_status}"
         )
     
-
-# def calculate_duration(trip_info):
-#     """
-#     Calculate duration
-#     """
-#     start_date = datetime.strptime(trip_info["start_date"], "%Y-%m-%d").date()
-#     end_date = datetime.strptime(trip_info["end_date"], "%Y-%m-%d").date()
-
-#     # Add 1 to include the first and last days both
-#     duration = (end_date-start_date).days + 1
-
-#     return duration
-# def calculate_daily_budget(trip_info, duration):
-#     """
-#     Calculate daily budget
-#     """
-#     total_budget = trip_info["total_budget"]
-
-#     daily_budget = round(int(total_budget)/duration, ndigits=2)
-
-#     return daily_budget
-# def calculate_total_spent(expenses):
-#     """
-#     Calculate total expenses
-#     """
-#     if not isinstance(expenses["amount"], list):
-#         total_spent = int(expenses["amount"])
-#     else:
-#         total_spent = sum(int(num) for num in expenses["amount"])
-
-#     return total_spent
-# def calculate_remaining_budget(trip_info, total_spent):
-#     """
-#     Calculate remaining budget
-#     """
-#     remaining_budget = int(trip_info["total_budget"]) - total_spent
-
-#     return remaining_budget
-# def calculate_days_left(trip_info):
-#     """
-#     Calculate remaining days
-#     """
-#     days_left = (datetime.strptime(trip_info["end_date"], "%Y-%m-%d").date() - datetime.now().date()).days
-
-#     return days_left
-# def calculate_avg_daily_spent(total_spent, duration, days_left):
-#     """
-#     Calculate avg daily expenses
-#     """
-#     days_spent = duration - days_left
-#     avg_daily_spent = total_spent/days_spent
-
-#     return avg_daily_spent
-# def calculate_budget_status(daily_budget, avg_daily_spent):
-    # """
-    # Calculate budget status
-    # """
-    # if avg_daily_spent > daily_budget:
-    #     budget_status = "over"
-    # elif avg_daily_spent < daily_budget:
-    #     budget_status = "under"
-    # else:
-    #     budget_status = "on"
-    
-    # return budget_status
-
 
 def main():
     """
@@ -407,33 +345,7 @@ def main():
 
 main()
 
-
-# def main():
-#     """
-#     Main function that runs all program functions
-#     """
-#     print("Welcome to WanderWallet your personal Travel Expense Tracker\n")
-#     trip_info = get_worksheet_dict("trip_info")
-#     expenses = get_worksheet_dict("expenses")
-
-#     calculate_total_spent(expenses)
-
-#     trip_found = trip_exists(trip_info)
-#     if trip_found:
-#         print("Seems like you have been working on a trip already. Do you want to continue?")
-#         # Go to function to input decision about continuing with current trip
-#     else:
-#         # Get basic info for new trip
-#         new_trip_info = get_new_trip_info()
-
-#         duration = calculate_duration(new_trip_info)
-#         daily_budget = calculate_daily_budget(new_trip_info, duration)
-#         total_spent = calculate_total_spent(expenses)
-#         remaining_budget = calculate_remaining_budget(new_trip_info, total_spent)
-#         days_left = calculate_days_left(new_trip_info)
-#         avg_daily_spent = calculate_avg_daily_spent(total_spent, duration, days_left)
-#         budget_status = calculate_budget_status(daily_budget, avg_daily_spent)
-
+# To Do: Add restriction that no changes can be made if the trip is already over
 
 """
 Trip Name	Start Date	End Date	Total Budget	Total Spent	Remaining Budget	Daily Budget	Avg Daily Spent	Budget Status	Days Left
