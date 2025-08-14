@@ -274,10 +274,6 @@ def start_new_trip(expenses):
     trip = Trip(new_trip_info, expenses)
     trip.update_trip_info()
     # Save new trip info to worksheet
-    # print("trip class values")
-    # print(trip.trip_info)
-    # print(trip.trip_info.values())
-    # print(list(trip.trip_info.values()))
     update_worksheet(list(trip.trip_info.values()), "trip_info")
     # Show trip summary
     print("Here is a summary of your initial trip information:")
@@ -403,7 +399,7 @@ class Trip:
             status_msg = "Under budget — great job managing your expenses!"
         else: 
             status_msg = "On track — keep spending balanced."
-            
+
         return (
             f"{'Trip Name:':20} {self.trip_name}\n"
             f"{'Dates:':20} {self.start_date} - {self.end_date} ({self.duration} days)\n"
@@ -416,6 +412,7 @@ class Trip:
             f"{'Daily Budget:':20} {self.daily_budget} €\n"
             f"{'Avg. Daily Expenses:':20} {self.avg_daily_spent} €\n"
             f"{'Budget Status:':20} {status_msg}\n"
+            f"\n(All € values rounded to the nearest possible integer\n")
         )
     
 
@@ -446,21 +443,11 @@ def main():
             expenses = get_worksheet_dict("expenses")
             # Start new trip
             trip = start_new_trip(expenses)
-
     else:
         trip = start_new_trip(expenses)
-        # print("No trip found. Let's set up a new trip.\n")
 
-        # # Get basic info for new trip
-        # new_trip_info = get_new_trip_info()
-        # # Set up Trip class and calculate trip_info values
-        # trip = Trip(new_trip_info, expenses)
-        # trip.update_trip_info()
-        # # Save new trip info to worksheet
-        # update_worksheet(list(trip.trip_info.values()), "trip_info")
-        # # Show trip summary
-        # print("Here is a summary of your initial trip information:")
-        # print(trip.summary())
+    print("Great! Let's start adding some expenses.")   
+
 
 
 main()
