@@ -341,7 +341,16 @@ class Trip:
         """
         Calculate remaining days
         """
-        return (self.end_date - datetime.now().date()).days
+        today = datetime.now().date()
+        if today > self.start_date and today < self.end_date:
+            days_left_val = (self.end_date - today).days
+        elif today > self.end_date:
+            # Trip is over
+            days_left_val = 0
+        else:
+            # Trip hasn't started yet
+            days_left_val = self.duration
+        return days_left_val
     
     @property
     def avg_daily_spent(self):
