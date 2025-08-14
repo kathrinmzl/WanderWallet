@@ -231,12 +231,14 @@ class Trip:
         """
         Calculate total expenses
         """
+        # if there are no expenses or max. 1 expense tracked, the "amount" is a single value instead of a list
         if not isinstance(self.expenses["amount"], list):
-            total_spent_val = int(self.expenses["amount"])
+            if self.expenses["amount"] == "":
+                return 0
+            else:
+                return int(self.expenses["amount"])
         else:
-            total_spent_val = sum(int(num) for num in self.expenses["amount"])
-
-        return total_spent_val
+            return sum(int(num) for num in self.expenses["amount"])
     
     @property
     def remaining_budget(self):
@@ -340,7 +342,7 @@ def main():
         print("Here is a summary of your initial trip information")
         print(trip.summary())
 
-        print(trip.trip_info)
+        #print(trip.trip_info)
 
 
 main()
