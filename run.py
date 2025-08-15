@@ -259,7 +259,21 @@ def update_worksheet(data, sheetname):
     """
     print(f"Updating {sheetname} worksheet...\n")
     worksheet = SHEET.worksheet(sheetname)
-    worksheet.append_row(data)
+    # First delete old data
+    n_rows = worksheet.row_count
+    # delete_rows only works if the rows actually exist
+    if n_rows >= 2:
+        worksheet.delete_rows(2, n_rows)
+    # Then add new data
+    if sheetname == "trip_info":
+        row_list = list(data.values())
+        worksheet.append_row(row_list)
+    else:  # sheetname = "expenses"
+        dates = data.get("date", [])
+        amounts = data.get("amount", [])
+        row_list = list(zip(dates, amounts))
+        worksheet.append_rows(row_list)
+    
     print(f"{sheetname} worksheet updated successfully.\n")
 
 
@@ -274,7 +288,7 @@ def start_new_trip(expenses):
     trip = Trip(new_trip_info, expenses)
     trip.update_trip_info()
     # Save new trip info to worksheet
-    update_worksheet(list(trip.trip_info.values()), "trip_info")
+    update_worksheet(trip.trip_info, "trip_info")
     # Show trip summary
     print("Here is a summary of your initial trip information:")
     print(trip.summary())
@@ -498,16 +512,18 @@ class Trip:
         if date_input in self.expenses["date"]:
             # Update value in expenses dict if date already exists
             date_index = self.expenses["date"].index(date_input)
-            self.expenses["amount"][date_index] = int(amount_input)
+            self.expenses["amount"][date_index] = amount_input
             print(f"Updated expense for {date_input}.")
         else:
             # Add value in expenses dict if date doesn't exist yet
             self.expenses["date"].append(date_input)
-            self.expenses["amount"].append(int(amount_input))
+            self.expenses["amount"].append(amount_input)
             print(f"Added new expense for {date_input}.")
         
         # Update trip_info dict with new expense data
         self.update_trip_info()
+
+        
         
     
 def main():
@@ -543,10 +559,14 @@ def main():
     print("Great! Let's start adding some expenses.")   
     # Add expenses
     trip.add_expenses()
+    # Save new trip info and expenses to worksheet
+    update_worksheet(trip.trip_info, "trip_info")
+    update_worksheet(trip.expenses, "expenses")
+
     print("Current trip summary:")
     print(trip.summary())
 
-    # todo: ask to add another expense and put everything into a while loop
+    # todo: ask to add another expense and put everything into a while loop, if no: end programm
 
 main()
 
