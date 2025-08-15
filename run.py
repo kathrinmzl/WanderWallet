@@ -289,8 +289,9 @@ class Trip:
         """
         # Get date input
         while True:
-            print("Please enter the expense date (Format: YYYY-MM-DD).")
+            print("Please enter the date for which you want to add an expense.")
             print("The expense date cannot be a future date.")
+            print("Format: YYYY-MM-DD")
             print("Example: 2025-08-01")
 
             date_input = input("\nEnter your expense date here: ")
@@ -354,7 +355,7 @@ class Trip:
 
         # Get amount input
         while True:
-            print("How much did you spent on that day?")
+            print(f"How much did you spend on {expense_date}?")
             print("Please enter your expense in whole numbers in Euros (no cents or decimal points).")
             print("Example: 24")
 
@@ -376,13 +377,13 @@ class Trip:
             # Update value in expenses dict if date already exists
             date_index = self.expenses["date"].index(date_input)
             self.expenses["amount"][date_index] = amount_input
-            print(f"Updated expense for {date_input}.")
+            print(f"Updated expense for {date_input}.\n")
         else:
             # Add value in expenses dict if date doesn't exist yet
             self.expenses["date"].append(date_input)
             self.expenses["amount"].append(amount_input)
-            print(f"Added new expense for {date_input}.")
-            print(self.expenses)
+            print(f"Added new expense for {date_input}.\n")
+            # print(self.expenses)
         
         # Update trip_info dict with new expense data
         self.update_trip_info()
@@ -531,10 +532,9 @@ def continue_trip():
     # Trip Name Input
     while True:
         
-        print("Do you want to continue tracking expenses for this trip?")
+        print("Do you want to continue working on this trip?")
         print("If 'yes', you can add new expenses in the next step.")
-        print("If 'no', the current trip will be deleted and you can start with a new trip in the next step.")
-        print("Example: yes")
+        print("If 'no', we delete the current trip and you can start with a new trip in the next step.")
 
         continue_trip_input = input("\nEnter your decision here (yes/no): ")
 
@@ -634,12 +634,12 @@ def main():
         print("End of program")
         return
     else:
-        print("Great! Your trip has already started! Let's start adding some expenses.")   
+        print("Great! Your trip has already started! Let's start adding some expenses.\n")   
 
     while True:
         # Add expenses
         trip.add_expenses()
-        
+
         print(trip.summary())
 
         # Check if user wants to add another expense
@@ -663,6 +663,8 @@ def main():
 
         if add_expense_input == "no":
             print("Thank you for using Wander Wallet! See you next time!\n")
+            print("Come back to add some more expenses to your trip or set up a new one!\n")
+            print("See you next time!\n")
             print("End of program")
             break
         # todo: maybe ask if user wants to see a list of all expenses so far
