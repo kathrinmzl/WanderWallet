@@ -557,16 +557,42 @@ def main():
         trip = start_new_trip(expenses)
 
     print("Great! Let's start adding some expenses.")   
-    # Add expenses
-    trip.add_expenses()
-    # Save new trip info and expenses to worksheet
-    update_worksheet(trip.trip_info, "trip_info")
-    update_worksheet(trip.expenses, "expenses")
 
-    print("Current trip summary:")
-    print(trip.summary())
+    while True:
+        # Add expenses
+        trip.add_expenses()
+        # Save new trip info and expenses to worksheet
+        update_worksheet(trip.trip_info, "trip_info")
+        update_worksheet(trip.expenses, "expenses")
 
-    # todo: ask to add another expense and put everything into a while loop, if no: end programm
+        print("Current trip summary:")
+        print(trip.summary())
+
+        # Check if user wants to add another expense
+        while True:
+            print("Do you want to add another expense?\n")
+            add_expense_input = input("Enter your decision here (yes/no): ")
+
+            # Validate input
+            try:
+                add_expense_input = add_expense_input.lower()
+
+                if add_expense_input not in ["yes", "no"]:
+                    raise ValueError(
+                        f"'yes' or 'no' expected, you provided '{add_expense_input}'"
+                        )    
+            except ValueError as e:
+                print(f"\nInvalid data: {e}, please try again.\n")
+                
+            print("Data is valid!\n")
+            break
+
+        if add_expense_input == "no":
+            print("End of program")
+            break
+
+    
+
 
 main()
 
