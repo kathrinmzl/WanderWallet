@@ -268,6 +268,7 @@ class Trip:
             status_msg = "On track — keep spending balanced."
 
         return (
+            f"Here is a summary of your current trip information:\n"
             f"{'Trip Name:':20} {self.trip_name}\n"
             f"{'Dates:':20} {self.start_date} - {self.end_date} ({self.duration} days)\n"
             f"{'Days Left:':20} {self.days_left} days\n"
@@ -279,7 +280,8 @@ class Trip:
             f"{'Daily Budget:':20} {self.daily_budget} €\n"
             f"{'Avg. Daily Expenses:':20} {self.avg_daily_spent} €\n"
             f"{'Budget Status:':20} {status_msg}\n"
-            f"\n(All € values rounded to the nearest possible integer)\n")
+            f"\n(All € values rounded to the nearest possible integer)\n"
+            )
     
     def add_expenses(self):
         """
@@ -577,7 +579,6 @@ def start_new_trip(expenses, sheet_manager):
     # Save new trip info to worksheet
     sheet_manager.update_worksheet(trip.trip_info, "trip_info")
     # Show trip summary
-    print("Here is a summary of your initial trip information:")
     print(trip.summary())
 
     return trip
@@ -597,6 +598,8 @@ def main():
     trip_info = sheet_manager.get_worksheet_dict("trip_info")
     expenses = sheet_manager.get_worksheet_dict("expenses")
 
+    today = datetime.now().date()
+
     # trip_info = get_worksheet_dict("trip_info")
     # expenses = get_worksheet_dict("expenses")
 
@@ -607,7 +610,6 @@ def main():
         trip = Trip(trip_info, expenses, sheet_manager)
         print(f"Seems like you have been working on your trip '{trip.trip_name}' already.\n")
         # Show trip summary
-        print("Here is a summary of your current trip information:")
         print(trip.summary())
         # Go to function to input decision about continuing with current trip
         continue_trip_val = continue_trip()
@@ -625,16 +627,19 @@ def main():
     else:
         trip = start_new_trip(expenses, sheet_manager)
 
-    print("Great! Let's start adding some expenses.")   
+    if trip.start_date > today:
+        print("Thank you for setting up your trip with Wander Wallet!")
+        print("Your trip hasn't started yet.")
+        print("Return to Wander Wallet once your trip starts and you want to start tracking expenses!\n")
+        print("End of program")
+        return
+    else:
+        print("Great! Your trip has already started! Let's start adding some expenses.")   
 
     while True:
         # Add expenses
         trip.add_expenses()
-        # Save new trip info and expenses to worksheet
-        # update_worksheet(trip.trip_info, "trip_info")
-        # update_worksheet(trip.expenses, "expenses")
-
-        print("Current trip summary:")
+        
         print(trip.summary())
 
         # Check if user wants to add another expense
@@ -661,6 +666,8 @@ def main():
             print("End of program")
             break
         # todo: maybe ask if user wants to see a list of all expenses so far
+
+        
 
 
 main()
