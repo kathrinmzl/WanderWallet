@@ -531,6 +531,10 @@ class Trip:
         # Update trip_info dict with new expense data
         self.update_trip_info()
 
+        # Save new trip info and expenses to worksheet
+        update_worksheet(self.trip_info, "trip_info")
+        update_worksheet(self.expenses, "expenses")
+
         
         
     
@@ -573,8 +577,8 @@ def main():
         # Add expenses
         trip.add_expenses()
         # Save new trip info and expenses to worksheet
-        update_worksheet(trip.trip_info, "trip_info")
-        update_worksheet(trip.expenses, "expenses")
+        # update_worksheet(trip.trip_info, "trip_info")
+        # update_worksheet(trip.expenses, "expenses")
 
         print("Current trip summary:")
         print(trip.summary())
@@ -599,6 +603,7 @@ def main():
             break
 
         if add_expense_input == "no":
+            print("Thank you for using Wander Wallet! See you next time!\n")
             print("End of program")
             break
 
