@@ -46,22 +46,20 @@ def get_worksheet_dict(sheet_name):
     sheet_list = sheet.get_all_values()
 
     # print(sheet_list)
-
-    if len(sheet_list) == 2:
-        keys, values = sheet_list
-        sheet_dict = dict(zip(keys, values))
-    
-    elif len(sheet_list) > 2:
+    if sheet_name == "trip_info":
+        if len(sheet_list) == 2:
+            keys, values = sheet_list
+            sheet_dict = dict(zip(keys, values))
+        else:  # only headings
+            sheet_dict = dict.fromkeys(sheet_list[0], "")
+        
+    if sheet_name == "expenses":
         # Extract keys and rows
         keys = sheet_list[0]       # ['date', 'amount']
         rows = sheet_list[1:]      # [['h', '1212'], ['s', '3435']]
-
         # Create dict with list comprehensions
-        sheet_dict = {key: [row[i] for row in rows] for i, key in enumerate(keys)}        
+        sheet_dict = {key: [row[i] for row in rows] for i, key in enumerate(keys)}
 
-    else:  # only headings
-        sheet_dict = dict.fromkeys(sheet_list[0], "")
-    
     return sheet_dict 
 
 
@@ -97,7 +95,7 @@ def get_new_trip_info():
         
         print("When are you taking your trip?")
         print("Please enter the start and end date for your new trip.")
-        print("The start date cannot be a past date.")
+        print("The end date must be a future date.")
         print("The dates should be seperated by a comma and have the Format YYYY-MM-DD")
         print("Please type in the start date first!")
         print("Example: 2025-08-01,2025-08-15")
@@ -173,11 +171,11 @@ def new_trip_info_valid(data_input, data_type):
                     "Your start date needs to be at least one day before your end date"
                 )
 
-            # Check if travel dates are in the future 
+            # Check if end date is in the future 
             today = datetime.now().date()
-            if today > start_date:
+            if today > end_date:
                 raise ValueError(
-                    "Your trip cannot start in the past"
+                    "Your trip end date needs to be in the future"
                 ) 
             
         except ValueError as e:
@@ -434,7 +432,8 @@ class Trip:
         """
         # Get date input
         while True:
-            print("Please enter the expense date (Format: YYYY-MM-DD):")
+            print("Please enter the expense date (Format: YYYY-MM-DD).")
+            print("The expense date cannot be a future date.")
             print("Example: 2025-08-01")
 
             date_input = input("\nEnter your expense date here: ")
@@ -453,6 +452,13 @@ class Trip:
                 if expense_date < self.start_date or expense_date > self.end_date:
                     raise ValueError(
                         f"Your expense date needs to be within your travel period {self.start_date} - {self.end_date}"
+                    )
+                
+                # Check if date is not in the future
+                today = datetime.now().date()
+                if expense_date > today:
+                    raise ValueError(
+                        f"Your expense date cannot be a future date"
                     )
             except ValueError as e:
                 print(f"\nInvalid data: {e}, please try again.\n")
@@ -508,6 +514,7 @@ class Trip:
             print("Data is valid!\n")
             break
 
+       
         # Add/update expense amount to/in expense dict
         if date_input in self.expenses["date"]:
             # Update value in expenses dict if date already exists
@@ -519,6 +526,7 @@ class Trip:
             self.expenses["date"].append(date_input)
             self.expenses["amount"].append(amount_input)
             print(f"Added new expense for {date_input}.")
+            print(self.expenses)
         
         # Update trip_info dict with new expense data
         self.update_trip_info()
@@ -535,6 +543,9 @@ def main():
 
     trip_info = get_worksheet_dict("trip_info")
     expenses = get_worksheet_dict("expenses")
+
+    # print(trip_info)
+    # print(expenses)
 
     if trip_exists(trip_info):
         trip = Trip(trip_info, expenses)
@@ -590,9 +601,6 @@ def main():
         if add_expense_input == "no":
             print("End of program")
             break
-
-    
-
 
 main()
 
