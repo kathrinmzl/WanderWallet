@@ -78,6 +78,9 @@ from datetime import datetime
 
 
 class SheetManager:
+    """
+    Sheet Manager ....
+    """
     def __init__(self, creds_file: str, sheet_name: str):
         SCOPE = [
             "https://www.googleapis.com/auth/spreadsheets",
@@ -289,7 +292,7 @@ class Trip:
         """
         # Get date input
         while True:
-            print("Please enter the date for which you want to add an expense.")
+            print("\nPlease enter the date for which you want to add an expense.")
             print("The expense date cannot be a future date.")
             print("Format: YYYY-MM-DD")
             print("Example: 2025-08-01")
@@ -392,6 +395,37 @@ class Trip:
         self.sheet_manager.update_worksheet(self.trip_info, "trip_info")
         self.sheet_manager.update_worksheet(self.expenses, "expenses")
  
+    def show_expenses_summary(self):
+        """
+        Check if user wants to see a list of all currently tracked expenses
+        """
+        while True:
+            print("Do you want to see a list of all currently tracked expenses?\n")
+            show_expenses_input = input("Enter your decision here (yes/no): ")
+
+            # Validate input
+            try:
+                show_expenses_input = show_expenses_input.lower()
+
+                if show_expenses_input not in ["yes", "no"]:
+                    raise ValueError(
+                        f"'yes' or 'no' expected, you provided '{show_expenses_input}'"
+                        )    
+            except ValueError as e:
+                print(f"\nInvalid data: {e}, please try again.\n")
+                
+            print("Data is valid!\n")
+            break
+        
+        if show_expenses_input == "yes":
+            print("Here is a list of your current expenses:\n")
+            print(f"{'Date':<15}{'Amount':>12}")
+            print("-" * 27)
+            for date, amount in zip(self.expenses['date'], self.expenses['amount']):
+                print(f"{date:<15}{amount:>10} €")
+        else: 
+            print("Okay, let's move on.")
+
 
 def trip_exists(trip_info_data):
     """
@@ -534,7 +568,7 @@ def continue_trip():
         
         print("Do you want to continue working on this trip?")
         print("If 'yes', you can add new expenses in the next step.")
-        print("If 'no', we delete the current trip and you can start with a new trip in the next step.")
+        print("If 'no', we delete the current trip and you can start with a new trip in the\nnext step.")
 
         continue_trip_input = input("\nEnter your decision here (yes/no): ")
 
@@ -584,6 +618,9 @@ def start_new_trip(expenses, sheet_manager):
     return trip
 
 
+
+
+
 def main():
     """
     Main function that runs all program functions
@@ -627,6 +664,7 @@ def main():
     else:
         trip = start_new_trip(expenses, sheet_manager)
 
+# export to function
     if trip.start_date > today:
         print("Thank you for setting up your trip with Wander Wallet!")
         print("Your trip hasn't started yet.")
@@ -636,6 +674,10 @@ def main():
     else:
         print("Great! Your trip has already started! Let's start adding some expenses.\n")   
 
+    # Check if user wants to see a list of all currently tracked expenses
+    trip.show_expenses_summary()
+
+# export to function
     while True:
         # Add expenses
         trip.add_expenses()
@@ -662,15 +704,14 @@ def main():
             break
 
         if add_expense_input == "no":
-            print("Thank you for using Wander Wallet! See you next time!\n")
-            print("Come back to add some more expenses to your trip or set up a new one!\n")
+            # Check if user wants to see a list of all currently tracked expenses
+            trip.show_expenses_summary()
+            print("Thank you for using Wander Wallet!")
+            print("Come back to this app to add some more expenses to your trip or set up a new one!")
             print("See you next time!\n")
             print("End of program")
             break
-        # todo: maybe ask if user wants to see a list of all expenses so far
-
-        
-
+    
 
 main()
 
