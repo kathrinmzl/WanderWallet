@@ -4,6 +4,7 @@ from colorama import Fore, Style, init
 # Initialize Colorama (colors reset automatically after each print)
 init(autoreset=True)
 
+
 def new_trip_info_valid(data_input, data_type):
     """
     Check if trip info input data is valid depending on the data type
@@ -12,7 +13,7 @@ def new_trip_info_valid(data_input, data_type):
         try:
             if len(data_input) > 30 or len(data_input) < 1:
                 raise ValueError(
-                    f"Min. 1 and not more than 20 characters allowed, you provided {len(data_input)}"
+                    f"Min. 1 and not more than 30 characters allowed,\nyou provided {len(data_input)}"
                 )    
         except ValueError as e:
             print(Fore.RED + Style.NORMAL + f"\nInvalid data: {e}, please try again.\n")
@@ -30,7 +31,8 @@ def new_trip_info_valid(data_input, data_type):
                 except ValueError:
                     # Custom message for invalid date format
                     # Set up custom message because "YYYY-MM-DDD" triggers a different warning than e.g. "YYYY-MMM-DD" or "hello"
-                    raise ValueError(f"'{date_str}'. Dates must be YYYY-MM-DD")
+                    # Also get triggered if a wrong seperator has been used
+                    raise ValueError(f"'{date_str}'. Make sure you provide two dates that are seperated by ','.\nDates must exist and be in the format 'YYYY-MM-DD'.")
 
             # Check if exactly two dates have been submitted
             if len(data_input) != 2:
@@ -43,7 +45,7 @@ def new_trip_info_valid(data_input, data_type):
             end_date = datetime_input[1]
             if end_date <= start_date:
                 raise ValueError(
-                    "Your start date needs to be at least one day before your end date"
+                    "Your start date needs to be at least one day before your\nend date"
                 )
 
             # Check if end date is in the future 
@@ -103,12 +105,12 @@ def expense_date_valid(date_input, trip):
         except ValueError:
             # Custom message for invalid date format
             # Set up custom message because "YYYY-MM-DDD" triggers a different warning than e.g. "YYYY-MMM-DD" or "hello"
-            raise ValueError(f"'{expense_date}'. Date must be YYYY-MM-DD")
+            raise ValueError(f"'{date_input}'. Date must exist and be in the format\nYYYY-MM-DD")
 
         # Check if date is within travel period
         if expense_date < trip.start_date or expense_date > trip.end_date:
             raise ValueError(
-                f"Your expense date needs to be within your travel period {trip.start_date} - {trip.end_date}"
+                f"Your expense date needs to be within your travel period\n{trip.start_date} - {trip.end_date}"
             )
         
         # Check if date is not in the future

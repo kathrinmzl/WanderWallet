@@ -61,7 +61,7 @@ def get_new_trip_info():
     while True:
         
         print(Style.BRIGHT + "What is the total budget for your trip?")
-        print("Please enter your budget in whole numbers in Euros (no cents or decimal points).")
+        print("Please enter your budget in whole numbers in Euros (no cents or\ndecimal points).")
         print("Example: 2500")
 
         trip_budget_input = input(Style.BRIGHT + "\n✏️  Enter your total trip budget here: ")
@@ -84,7 +84,7 @@ def continue_trip():
     # Trip Name Input
     while True:
         
-        print(Style.BRIGHT + "\nDo you want to continue working on this trip?")
+        print(Style.BRIGHT + "Do you want to continue working on this trip?")
         print("If 'yes', you can add new expenses in the next step.")
         print("If 'no', we delete the current trip and you can start with a new trip in the\nnext step.")
 
@@ -153,8 +153,8 @@ def add_expenses(trip):
     """
     # Get date input
     while True:
-        print(Style.BRIGHT + "\nPlease enter the date for which you want to add an expense.")
-        print("The expense date cannot be a future date.")
+        print(Style.BRIGHT + "Please enter the date for which you want to add an expense.")
+        print("The expense date needs to be within your travel dates,\nbut cannot be a future date.")
         print("Format: YYYY-MM-DD")
         print("Example: 2025-08-01")
 
@@ -190,7 +190,7 @@ def add_expenses(trip):
     # Get amount input
     while True:
         print(Style.BRIGHT + f"How much did you spend on {date_input}?")
-        print("Please enter your expense in whole numbers in Euros (no cents or decimal points).")
+        print("Please enter your expense in whole numbers in Euros (no cents or\ndecimal points).")
         print("Example: 24")
 
         amount_input = input(Style.BRIGHT + "\n✏️  Enter your expense here: ")
@@ -286,7 +286,7 @@ def main():
     if trip.start_date > today:
         print("Thank you for setting up your trip with Wander Wallet!")
         print("Your trip hasn't started yet.")
-        print("Return to Wander Wallet once your trip starts and you want to start tracking expenses!\n")
+        print("Return to Wander Wallet once your trip starts and you want to start\ntracking expenses!\n")
         print("End of program")
         return
     else:
@@ -299,7 +299,7 @@ def main():
         # Check if user wants to see a list of all currently tracked expenses
         show_expenses_summary(trip)
         print("\nThank you for using Wander Wallet!")
-        print("Come back to this app to add some more expenses to your trip or set up a new one!")
+        print("Come back to this app to add some more expenses to your trip or\nset up a new one!")
         print("See you next time!\n")
         print("End of program")
         return
