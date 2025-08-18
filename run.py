@@ -335,22 +335,14 @@ class Trip:
                 while True:
                     print(f"You already submitted an expense of {old_amount} € for {date_input}.\n")
                     print("Do you want to update it?\n")
-                    update_date_input = input("Enter your decision here (yes/no): ")
+                    yes_no_input = input("Enter your decision here (yes/no): ")
 
                     # Validate input
-                    try:
-                        update_date_input = update_date_input.lower()
-
-                        if update_date_input not in ["yes", "no"]:
-                            raise ValueError(
-                                f"'yes' or 'no' expected, you provided '{update_date_input}'"
-                                )    
-                    except ValueError as e:
-                        print(f"\nInvalid data: {e}, please try again.\n")
-                    print("Data is valid!\n")
-                    break
+                    if yes_no_input_valid(yes_no_input):
+                        print("Data is valid!\n")
+                        break
                   
-                if update_date_input == "no":
+                if yes_no_input == "no":
                     print("Okay, we will keep the old expense for this date.\n")
                     return  # Exit the method without changing anything
                 
@@ -401,23 +393,14 @@ class Trip:
         """
         while True:
             print("Do you want to see a list of all currently tracked expenses?\n")
-            show_expenses_input = input("Enter your decision here (yes/no): ")
+            yes_no_input = input("Enter your decision here (yes/no): ")
 
             # Validate input
-            try:
-                show_expenses_input = show_expenses_input.lower()
-
-                if show_expenses_input not in ["yes", "no"]:
-                    raise ValueError(
-                        f"'yes' or 'no' expected, you provided '{show_expenses_input}'"
-                        )    
-            except ValueError as e:
-                print(f"\nInvalid data: {e}, please try again.\n")
-                
-            print("Data is valid!\n")
-            break
+            if yes_no_input_valid(yes_no_input):
+                print("Data is valid!\n")
+                break
         
-        if show_expenses_input == "yes":
+        if yes_no_input == "yes":
             print("Here is a list of your current expenses:\n")
             print(f"{'Date':<15}{'Amount':>12}")
             print("-" * 27)
@@ -570,21 +553,21 @@ def continue_trip():
         print("If 'yes', you can add new expenses in the next step.")
         print("If 'no', we delete the current trip and you can start with a new trip in the\nnext step.")
 
-        continue_trip_input = input("\nEnter your decision here (yes/no): ")
+        yes_no_input = input("\nEnter your decision here (yes/no): ")
 
-        if continue_trip_input_valid(continue_trip_input):
+        if yes_no_input_valid(yes_no_input):
             print("Data is valid!\n")
             break
     
-    if continue_trip_input == "yes":
+    if yes_no_input == "yes":
         return True
     else: 
         return False
 
 
-def continue_trip_input_valid(data_input):
+def yes_no_input_valid(data_input):
     """
-    Check if continue trip input data is valid 
+    Check if yes/no input data is valid 
     """
     try:
         data_input_val = data_input.lower()
@@ -618,9 +601,6 @@ def start_new_trip(expenses, sheet_manager):
     return trip
 
 
-
-
-
 def main():
     """
     Main function that runs all program functions
@@ -637,12 +617,6 @@ def main():
 
     today = datetime.now().date()
 
-    # trip_info = get_worksheet_dict("trip_info")
-    # expenses = get_worksheet_dict("expenses")
-
-    # print(trip_info)
-    # print(expenses)
-
     if trip_exists(trip_info):
         trip = Trip(trip_info, expenses, sheet_manager)
         print(f"Seems like you have been working on your trip '{trip.trip_name}' already.\n")
@@ -654,8 +628,6 @@ def main():
         if not continue_trip_val:
             sheet_manager.del_worksheet_data("trip_info")
             sheet_manager.del_worksheet_data("expenses")
-            # del_worksheet_data("trip_info")
-            # del_worksheet_data("expenses")
             # Set up new trip_info and expenses objects
             trip_info = sheet_manager.get_worksheet_dict("trip_info")
             expenses = sheet_manager.get_worksheet_dict("expenses")
@@ -687,26 +659,17 @@ def main():
         # Check if user wants to add another expense
         while True:
             print("Do you want to add another expense?\n")
-            add_expense_input = input("Enter your decision here (yes/no): ")
+            yes_no_input = input("Enter your decision here (yes/no): ")
 
             # Validate input
-            try:
-                add_expense_input = add_expense_input.lower()
+            if yes_no_input_valid(yes_no_input):
+                print("Data is valid!\n")
+                break
 
-                if add_expense_input not in ["yes", "no"]:
-                    raise ValueError(
-                        f"'yes' or 'no' expected, you provided '{add_expense_input}'"
-                        )    
-            except ValueError as e:
-                print(f"\nInvalid data: {e}, please try again.\n")
-                
-            print("Data is valid!\n")
-            break
-
-        if add_expense_input == "no":
+        if yes_no_input == "no":
             # Check if user wants to see a list of all currently tracked expenses
             trip.show_expenses_summary()
-            print("Thank you for using Wander Wallet!")
+            print("\nThank you for using Wander Wallet!")
             print("Come back to this app to add some more expenses to your trip or set up a new one!")
             print("See you next time!\n")
             print("End of program")
