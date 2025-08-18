@@ -128,15 +128,19 @@ def new_trip_info_valid(data_input, data_type):
         return True
 
     if data_type == "trip_budget":
-        try:
-            # Check if provided string can be transformed to an int object
-            int(data_input)
-        except ValueError:
-            print("\nInvalid data: Your budget is not a whole number, please try again.\n")
-            return False
-        
-        return True
+        int_input_valid(data_input)
+
     
+def int_input_valid(data_input):
+    try:
+        # Check if provided string can be transformed to an int object
+        int(data_input)
+    except ValueError:
+        print("\nInvalid data: Your input is not a whole number, please try again.\n")
+        return False
+    
+    return True
+
 
 def continue_trip():
     """
@@ -220,7 +224,42 @@ def get_new_expense(trip):
         if yes_no_input == "no":
             break
 
-    return yes_no_input
+    if yes_no_input == "yes":
+        return True
+    else: 
+        return False
+
+
+def expense_date_valid(date_input, trip):
+    """
+    Check if expense date input is valdid
+    """
+    try:
+        # Check if provided string can be transformed to a datetime object
+        try:
+            expense_date = datetime.strptime(date_input, "%Y-%m-%d").date()
+        except ValueError:
+            # Custom message for invalid date format
+            # Set up custom message because "YYYY-MM-DDD" triggers a different warning than e.g. "YYYY-MMM-DD" or "hello"
+            raise ValueError(f"'{expense_date}'. Date must be YYYY-MM-DD")
+
+        # Check if date is within travel period
+        if expense_date < trip.start_date or expense_date > trip.end_date:
+            raise ValueError(
+                f"Your expense date needs to be within your travel period {trip.start_date} - {trip.end_date}"
+            )
+        
+        # Check if date is not in the future
+        today = datetime.now().date()
+        if expense_date > today:
+            raise ValueError(
+                "Your expense date cannot be a future date"
+            )
+    except ValueError as e:
+        print(f"\nInvalid data: {e}, please try again.\n")
+        return False
+    
+    return True
 
 
 def add_expenses(trip):
@@ -237,32 +276,10 @@ def add_expenses(trip):
         date_input = input("\nEnter your expense date here: ")
 
         # Validate date input
-        try:
-            # Check if provided string can be transformed to a datetime object
-            try:
-                expense_date = datetime.strptime(date_input, "%Y-%m-%d").date()
-            except ValueError:
-                # Custom message for invalid date format
-                # Set up custom message because "YYYY-MM-DDD" triggers a different warning than e.g. "YYYY-MMM-DD" or "hello"
-                raise ValueError(f"'{expense_date}'. Date must be YYYY-MM-DD")
-
-            # Check if date is within travel period
-            if expense_date < trip.start_date or expense_date > trip.end_date:
-                raise ValueError(
-                    f"Your expense date needs to be within your travel period {trip.start_date} - {trip.end_date}"
-                )
-            
-            # Check if date is not in the future
-            today = datetime.now().date()
-            if expense_date > today:
-                raise ValueError(
-                    "Your expense date cannot be a future date"
-                )
-        except ValueError as e:
-            print(f"\nInvalid data: {e}, please try again.\n")
+        if expense_date_valid(date_input, trip):
+            print("Data is valid!\n")
+        else: 
             continue
-
-        print("Data is valid!\n")
 
         # Check if the date already exists in the database 
         # Ask user if they want to update it if it already exists
@@ -287,22 +304,16 @@ def add_expenses(trip):
 
     # Get amount input
     while True:
-        print(f"How much did you spend on {expense_date}?")
+        print(f"How much did you spend on {date_input}?")
         print("Please enter your expense in whole numbers in Euros (no cents or decimal points).")
         print("Example: 24")
 
         amount_input = input("\nEnter your expense here: ")
 
-        # Validate amount input
-        try:
-            # Check if provided string can be transformed to an int object
-            int(amount_input)
-        except ValueError:
-            print("\nInvalid data: Your budget is not a whole number, please try again.\n")
-            continue
-            
-        print("Data is valid!\n")
-        break
+        # Validate amount input          
+        if int_input_valid(amount_input):
+            print("Data is valid!\n")
+            break
 
     # Add/update expense amount to/in expense dict
     if date_input in trip.expenses["date"]:
@@ -399,7 +410,7 @@ def main():
     # Get new expense from user and check if they want to add another one
     get_new_expense_input = get_new_expense(trip)
 
-    if get_new_expense_input == "no":
+    if not get_new_expense_input:
         # Check if user wants to see a list of all currently tracked expenses
         show_expenses_summary(trip)
         print("\nThank you for using Wander Wallet!")
