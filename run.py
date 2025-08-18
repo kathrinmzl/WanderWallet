@@ -248,7 +248,16 @@ def main():
     """
     Main function that runs all program functions
     """
-    print("Welcome to WanderWallet your personal Travel Expense Tracker\n")
+    logo = r"""
+    __        __              _            __        __    _ _      _   
+    \ \      / /_ _ _ __   __| | ___ _ __  \ \      / /_ _| | | ___| |_ 
+     \ \ /\ / / _` | '_ \ / _` |/ _ \ '__|  \ \ /\ / / _` | | |/ _ \ __|
+      \ V  V / (_| | | | | (_| |  __/ |      \ V  V / (_| | | |  __/ |_ 
+       \_/\_/ \__,_|_| |_|\__,_|\___|_|       \_/\_/ \__,_|_|_|\___|\__|
+   """
+    print(f"{Style.BRIGHT}{Fore.GREEN}{logo}")
+
+    print("\nWelcome to Wander Wallet, your personal Travel Expense Tracker!\n")
     print("⏳ Checking if you have already started tracking travel expenses with us ...")
 
     creds_file = "creds.json"
