@@ -104,7 +104,7 @@ def start_new_trip(expenses, sheet_manager):
     """
     Initialize new trip
     """
-    print("✅ No trip found. Let's set up a new trip.\n")
+    print("✅  No trip found. Let's set up a new trip.\n")
     # Get basic info for new trip
     new_trip_info = get_new_trip_info()
     # Set up Trip class and calculate trip_info values
@@ -249,7 +249,7 @@ def main():
     Main function that runs all program functions
     """
     print("\nWelcome to Wander Wallet, your personal Travel Expense Tracker!\n")
-    print("⏳ Checking if you have already started tracking travel expenses with us ...")
+    print("⏳  Checking if you have already started tracking travel expenses with us ...")
 
     creds_file = "creds.json"
     sheet_name = "wander_wallet"
@@ -263,7 +263,7 @@ def main():
     trip_exists_answer = trip_exists(trip_info)
     if trip_exists_answer:
         trip = Trip(trip_info, expenses, sheet_manager)
-        print(f"✅ Seems like you have been working on your trip '{trip.trip_name}' already.\n")
+        print(f"✅  Seems like you have been working on your trip '{trip.trip_name}' already.\n")
         # Show trip summary
         print(trip.summary())
         # Check if user wants to see a list of all currently tracked expenses
