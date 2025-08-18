@@ -84,7 +84,7 @@ def continue_trip():
     # Trip Name Input
     while True:
         
-        print(Style.BRIGHT + "Do you want to continue working on this trip?")
+        print(Style.BRIGHT + "\nDo you want to continue working on this trip?")
         print("If 'yes', you can add new expenses in the next step.")
         print("If 'no', we delete the current trip and you can start with a new trip in the\nnext step.")
 
@@ -236,10 +236,14 @@ def show_expenses_summary(trip):
     
     if yes_no_input == "yes":
         print(Style.BRIGHT + "Here is a list of your current expenses:\n")
-        print(f"{'Date':<15}{'Amount':>12}")
-        print("-" * 27)
-        for date, amount in zip(trip.expenses['date'], trip.expenses['amount']):
-            print(f"{date:<15}{amount:>10} €")
+        if len(trip.expenses["date"]) == 0:
+            print("⚠️  You haven't tracked any expenses yet.")
+        else:
+            print(f"{'Date':<15}{'Amount':>12}")
+            print("-" * 27)
+            for date, amount in zip(trip.expenses["date"], trip.expenses["amount"]):
+                print(f"{date:<15}{amount:>10} €")
+        
     else: 
         print("Okay, let's move on.")
 
@@ -290,7 +294,7 @@ def main():
         print("End of program")
         return
     else:
-        print("Great! Your trip has already started! Let's start adding some expenses.")   
+        print("Great! Your trip has already started! Let's start adding some expenses.\n")   
 
     # Get new expense from user and check if they want to add another one
     get_new_expense_input = get_new_expense(trip)
