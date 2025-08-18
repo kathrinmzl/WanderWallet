@@ -145,7 +145,7 @@ def continue_trip():
     # Trip Name Input
     while True:
         
-        print("Do you want to continue working on this trip?")
+        print("\nDo you want to continue working on this trip?")
         print("If 'yes', you can add new expenses in the next step.")
         print("If 'no', we delete the current trip and you can start with a new trip in the\nnext step.")
 
@@ -195,6 +195,33 @@ def start_new_trip(expenses, sheet_manager):
     print(trip.summary())
 
     return trip
+
+
+def get_new_expense(trip):
+    """
+    Ask user to get a new expense
+    """
+    while True:
+        # Add expenses
+        add_expenses(trip)
+
+        print(trip.summary())
+
+        # Check if user wants to add another expense
+        while True:
+            print("Do you want to add another expense?\n")
+            yes_no_input = input("Enter your decision here (yes/no): ")
+
+            # Validate input
+            if yes_no_input_valid(yes_no_input):
+                print("Data is valid!\n")
+                break
+        
+        if yes_no_input == "no":
+            break
+
+    return yes_no_input
+
 
 def add_expenses(trip):
     """
@@ -297,6 +324,7 @@ def add_expenses(trip):
     trip.sheet_manager.update_worksheet(trip.trip_info, "trip_info")
     trip.sheet_manager.update_worksheet(trip.expenses, "expenses")
 
+
 def show_expenses_summary(trip):
     """
     Check if user wants to see a list of all currently tracked expenses
@@ -336,11 +364,14 @@ def main():
 
     today = datetime.now().date()
 
-    if trip_exists(trip_info):
+    trip_exists_answer = trip_exists(trip_info)
+    if trip_exists_answer:
         trip = Trip(trip_info, expenses, sheet_manager)
         print(f"Seems like you have been working on your trip '{trip.trip_name}' already.\n")
         # Show trip summary
         print(trip.summary())
+        # Check if user wants to see a list of all currently tracked expenses
+        show_expenses_summary(trip)
         # Go to function to input decision about continuing with current trip
         continue_trip_val = continue_trip()
         # Delete old trip information if user decidess to start a new trip
@@ -355,7 +386,7 @@ def main():
     else:
         trip = start_new_trip(expenses, sheet_manager)
 
-# export to function
+    # Check if the trip has already started, if not, end the program, otherwise continue
     if trip.start_date > today:
         print("Thank you for setting up your trip with Wander Wallet!")
         print("Your trip hasn't started yet.")
@@ -363,36 +394,19 @@ def main():
         print("End of program")
         return
     else:
-        print("Great! Your trip has already started! Let's start adding some expenses.\n")   
+        print("Great! Your trip has already started! Let's start adding some expenses.")   
 
-    # Check if user wants to see a list of all currently tracked expenses
-    show_expenses_summary(trip)
+    # Get new expense from user and check if they want to add another one
+    get_new_expense_input = get_new_expense(trip)
 
-# export to function
-    while True:
-        # Add expenses
-        add_expenses(trip)
-
-        print(trip.summary())
-
-        # Check if user wants to add another expense
-        while True:
-            print("Do you want to add another expense?\n")
-            yes_no_input = input("Enter your decision here (yes/no): ")
-
-            # Validate input
-            if yes_no_input_valid(yes_no_input):
-                print("Data is valid!\n")
-                break
-
-        if yes_no_input == "no":
-            # Check if user wants to see a list of all currently tracked expenses
-            show_expenses_summary(trip)
-            print("\nThank you for using Wander Wallet!")
-            print("Come back to this app to add some more expenses to your trip or set up a new one!")
-            print("See you next time!\n")
-            print("End of program")
-            break
+    if get_new_expense_input == "no":
+        # Check if user wants to see a list of all currently tracked expenses
+        show_expenses_summary(trip)
+        print("\nThank you for using Wander Wallet!")
+        print("Come back to this app to add some more expenses to your trip or set up a new one!")
+        print("See you next time!\n")
+        print("End of program")
+        return
     
 
 main()
