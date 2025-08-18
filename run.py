@@ -5,7 +5,10 @@ from datetime import datetime
 from trip import Trip
 from sheet_manager import SheetManager
 from validation import new_trip_info_valid, int_input_valid, yes_no_input_valid, expense_date_valid
+from colorama import Fore, Style, init
 
+# Initialize Colorama (colors reset automatically after each print)
+init(autoreset=True)
 
 def trip_exists(trip_info_data):
     """
@@ -25,49 +28,50 @@ def get_new_trip_info():
     # Trip Name Input
     while True:
         
-        print("Please enter a name for your new trip (1 - 30 characters).")
+        print(Style.BRIGHT + "Please enter a name for your new trip (1 - 30 characters).")
         print("Example: Italy Summer 2025")
 
-        trip_name_input = input("\nEnter your trip name here: ")
+        trip_name_input = input(Style.BRIGHT + "\n✏️  Enter your trip name here: ")
 
         if new_trip_info_valid(trip_name_input, "trip_name"):
-            print("Data is valid!\n")
+            print(Fore.GREEN + Style.NORMAL + "Data is valid!\n")
             break
     
     # Trip Dates Input
     while True:
         
-        print("When are you taking your trip?")
+        print(Style.BRIGHT + "When are you taking your trip?")
         print("Please enter the start and end date for your new trip.")
         print("The end date must be a future date.")
         print("The dates should be seperated by a comma and have the Format YYYY-MM-DD")
         print("Please type in the start date first!")
         print("Example: 2025-08-01,2025-08-15")
 
-        trip_dates_input = input("\nEnter your trip dates here: ")
+        trip_dates_input = input(Style.BRIGHT + "\n✏️  Enter your trip dates here: ")
 
         # Remove white space and seperate dates at the comma
         trip_dates_list = [date.strip() for date in trip_dates_input.split(",")]
 
         if new_trip_info_valid(trip_dates_list, "trip_dates"):
-            print("Data is valid!\n")
+            print(Fore.GREEN + Style.NORMAL + "Data is valid!\n")
             break
 
     # Trip Budget Input
     while True:
         
-        print("What is the total budget for your trip?")
+        print(Style.BRIGHT + "What is the total budget for your trip?")
         print("Please enter your budget in whole numbers in Euros (no cents or decimal points).")
         print("Example: 2500")
 
-        trip_budget_input = input("\nEnter your total trip budget here: ")
+        trip_budget_input = input(Style.BRIGHT + "\n✏️  Enter your total trip budget here: ")
 
         if new_trip_info_valid(trip_budget_input, "trip_budget"):
-            print("Data is valid!\n")
+            print(Fore.GREEN + Style.NORMAL + "Data is valid!\n")
             break
     
     new_trip_info = [trip_name_input, *trip_dates_list, trip_budget_input]
-    new_trip_info_keys = ['trip_name', 'start_date', 'end_date', 'total_budget']
+    new_trip_info_keys = ['trip_name',
+     'start_date', 'end_date', 'total_budget']
 
     new_trip_info_dict = dict(zip(new_trip_info_keys, new_trip_info))
     return new_trip_info_dict
@@ -80,14 +84,14 @@ def continue_trip():
     # Trip Name Input
     while True:
         
-        print("\nDo you want to continue working on this trip?")
+        print(Style.BRIGHT + "\nDo you want to continue working on this trip?")
         print("If 'yes', you can add new expenses in the next step.")
         print("If 'no', we delete the current trip and you can start with a new trip in the\nnext step.")
 
-        yes_no_input = input("\nEnter your decision here (yes/no): ")
+        yes_no_input = input(Style.BRIGHT + "\n✏️  Enter your decision here (yes/no): ")
 
         if yes_no_input_valid(yes_no_input):
-            print("Data is valid!\n")
+            print(Fore.GREEN + Style.NORMAL + "Data is valid!\n")
             break
     
     if yes_no_input == "yes":
@@ -100,7 +104,7 @@ def start_new_trip(expenses, sheet_manager):
     """
     Initialize new trip
     """
-    print("No trip found. Let's set up a new trip.\n")
+    print("✅ No trip found. Let's set up a new trip.\n")
     # Get basic info for new trip
     new_trip_info = get_new_trip_info()
     # Set up Trip class and calculate trip_info values
@@ -126,12 +130,12 @@ def get_new_expense(trip):
 
         # Check if user wants to add another expense
         while True:
-            print("Do you want to add another expense?\n")
-            yes_no_input = input("Enter your decision here (yes/no): ")
+            print(Style.BRIGHT + "Do you want to add another expense?\n")
+            yes_no_input = input(Style.BRIGHT + "✏️  Enter your decision here (yes/no): ")
 
             # Validate input
             if yes_no_input_valid(yes_no_input):
-                print("Data is valid!\n")
+                print(Fore.GREEN + Style.NORMAL + "Data is valid!\n")
                 break
         
         if yes_no_input == "no":
@@ -149,16 +153,16 @@ def add_expenses(trip):
     """
     # Get date input
     while True:
-        print("\nPlease enter the date for which you want to add an expense.")
+        print(Style.BRIGHT + "\nPlease enter the date for which you want to add an expense.")
         print("The expense date cannot be a future date.")
         print("Format: YYYY-MM-DD")
         print("Example: 2025-08-01")
 
-        date_input = input("\nEnter your expense date here: ")
+        date_input = input(Style.BRIGHT + "\n✏️  Enter your expense date here: ")
 
         # Validate date input
         if expense_date_valid(date_input, trip):
-            print("Data is valid!\n")
+            print(Fore.GREEN + Style.NORMAL + "Data is valid!\n")
         else: 
             continue
 
@@ -168,13 +172,13 @@ def add_expenses(trip):
             old_date_index = trip.expenses["date"].index(date_input)
             old_amount = trip.expenses["amount"][old_date_index]
             while True:
-                print(f"You already submitted an expense of {old_amount} € for {date_input}.\n")
-                print("Do you want to update it?\n")
-                yes_no_input = input("Enter your decision here (yes/no): ")
+                print(Style.BRIGHT + f"You already submitted an expense of {old_amount} € for {date_input}.\n")
+                print(Style.BRIGHT + "Do you want to update it?\n")
+                yes_no_input = input(Style.BRIGHT + "✏️  Enter your decision here (yes/no): ")
 
                 # Validate input
                 if yes_no_input_valid(yes_no_input):
-                    print("Data is valid!\n")
+                    print(Fore.GREEN + Style.NORMAL + "Data is valid!\n")
                     break
                 
             if yes_no_input == "no":
@@ -185,15 +189,15 @@ def add_expenses(trip):
 
     # Get amount input
     while True:
-        print(f"How much did you spend on {date_input}?")
+        print(Style.BRIGHT + f"How much did you spend on {date_input}?")
         print("Please enter your expense in whole numbers in Euros (no cents or decimal points).")
         print("Example: 24")
 
-        amount_input = input("\nEnter your expense here: ")
+        amount_input = input(Style.BRIGHT + "\n✏️  Enter your expense here: ")
 
         # Validate amount input          
         if int_input_valid(amount_input):
-            print("Data is valid!\n")
+            print(Fore.GREEN + Style.NORMAL + "Data is valid!\n")
             break
 
     # Add/update expense amount to/in expense dict
@@ -222,16 +226,16 @@ def show_expenses_summary(trip):
     Check if user wants to see a list of all currently tracked expenses
     """
     while True:
-        print("Do you want to see a list of all currently tracked expenses?\n")
-        yes_no_input = input("Enter your decision here (yes/no): ")
+        print(Style.BRIGHT + "Do you want to see a list of all currently tracked expenses?\n")
+        yes_no_input = input(Style.BRIGHT + "✏️  Enter your decision here (yes/no): ")
 
         # Validate input
         if yes_no_input_valid(yes_no_input):
-            print("Data is valid!\n")
+            print(Fore.GREEN + Style.NORMAL + "Data is valid!\n")
             break
     
     if yes_no_input == "yes":
-        print("Here is a list of your current expenses:\n")
+        print(Style.BRIGHT + "Here is a list of your current expenses:\n")
         print(f"{'Date':<15}{'Amount':>12}")
         print("-" * 27)
         for date, amount in zip(trip.expenses['date'], trip.expenses['amount']):
@@ -245,7 +249,7 @@ def main():
     Main function that runs all program functions
     """
     print("Welcome to WanderWallet your personal Travel Expense Tracker\n")
-    print("Checking if you have already started tracking travel expenses with us ...")
+    print("⏳ Checking if you have already started tracking travel expenses with us ...")
 
     creds_file = "creds.json"
     sheet_name = "wander_wallet"
@@ -259,7 +263,7 @@ def main():
     trip_exists_answer = trip_exists(trip_info)
     if trip_exists_answer:
         trip = Trip(trip_info, expenses, sheet_manager)
-        print(f"Seems like you have been working on your trip '{trip.trip_name}' already.\n")
+        print(f"✅ Seems like you have been working on your trip '{trip.trip_name}' already.\n")
         # Show trip summary
         print(trip.summary())
         # Check if user wants to see a list of all currently tracked expenses

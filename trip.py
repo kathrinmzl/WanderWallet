@@ -1,6 +1,9 @@
 from datetime import datetime
 from sheet_manager import SheetManager
+from colorama import Fore, Style, init
 
+# Initialize Colorama (colors reset automatically after each print)
+init(autoreset=True)
 
 class Trip:
     """
@@ -121,8 +124,8 @@ class Trip:
         else: 
             status_msg = "On track — keep spending balanced."
 
+        print(Style.BRIGHT + "Here is a summary of your current trip information:\n")
         return (
-            f"Here is a summary of your current trip information:\n"
             f"{'Trip Name:':20} {self.trip_name}\n"
             f"{'Dates:':20} {self.start_date} - {self.end_date} ({self.duration} days)\n"
             f"{'Days Left:':20} {self.days_left} days\n"

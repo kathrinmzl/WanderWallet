@@ -1,5 +1,8 @@
 from datetime import datetime
+from colorama import Fore, Style, init
 
+# Initialize Colorama (colors reset automatically after each print)
+init(autoreset=True)
 
 def new_trip_info_valid(data_input, data_type):
     """
@@ -12,7 +15,7 @@ def new_trip_info_valid(data_input, data_type):
                     f"Min. 1 and not more than 20 characters allowed, you provided {len(data_input)}"
                 )    
         except ValueError as e:
-            print(f"\nInvalid data: {e}, please try again.\n")
+            print(Fore.RED + Style.NORMAL + f"\nInvalid data: {e}, please try again.\n")
             return False
         
         return True
@@ -51,7 +54,7 @@ def new_trip_info_valid(data_input, data_type):
                 ) 
             
         except ValueError as e:
-            print(f"\nInvalid data: {e}, please try again.\n")
+            print(Fore.RED + Style.NORMAL + f"\nInvalid data: {e}, please try again.\n")
             return False
         
         return True
@@ -65,7 +68,7 @@ def int_input_valid(data_input):
         # Check if provided string can be transformed to an int object
         int(data_input)
     except ValueError:
-        print("\nInvalid data: Your input is not a whole number, please try again.\n")
+        print(Fore.RED + Style.NORMAL + "\nInvalid data: Your input is not a whole number, please try again.\n")
         return False
     
     return True
@@ -83,7 +86,7 @@ def yes_no_input_valid(data_input):
                 f"'yes' or 'no' expected, you provided '{data_input_val}'"
                 )    
     except ValueError as e:
-        print(f"\nInvalid data: {e}, please try again.\n")
+        print(Fore.RED + Style.NORMAL + f"\nInvalid data: {e}, please try again.\n")
         return False
         
     return True
@@ -115,7 +118,7 @@ def expense_date_valid(date_input, trip):
                 "Your expense date cannot be a future date"
             )
     except ValueError as e:
-        print(f"\nInvalid data: {e}, please try again.\n")
+        print(Fore.RED + Style.NORMAL + f"\nInvalid data: {e}, please try again.\n")
         return False
     
     return True
