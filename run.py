@@ -10,6 +10,7 @@ from colorama import Fore, Style, init
 # Initialize Colorama (colors reset automatically after each print)
 init(autoreset=True)
 
+
 def trip_exists(trip_info_data):
     """
     Check if trip exists already
@@ -70,8 +71,7 @@ def get_new_trip_info():
             break
     
     new_trip_info = [trip_name_input, *trip_dates_list, trip_budget_input]
-    new_trip_info_keys = ['trip_name',
-     'start_date', 'end_date', 'total_budget']
+    new_trip_info_keys = ['trip_name', 'start_date', 'end_date', 'total_budget']
 
     new_trip_info_dict = dict(zip(new_trip_info_keys, new_trip_info))
     return new_trip_info_dict
@@ -248,15 +248,6 @@ def main():
     """
     Main function that runs all program functions
     """
-    logo = r"""
-    __        __              _            __        __    _ _      _   
-    \ \      / /_ _ _ __   __| | ___ _ __  \ \      / /_ _| | | ___| |_ 
-     \ \ /\ / / _` | '_ \ / _` |/ _ \ '__|  \ \ /\ / / _` | | |/ _ \ __|
-      \ V  V / (_| | | | | (_| |  __/ |      \ V  V / (_| | | |  __/ |_ 
-       \_/\_/ \__,_|_| |_|\__,_|\___|_|       \_/\_/ \__,_|_|_|\___|\__|
-   """
-    print(f"{Style.BRIGHT}{Fore.GREEN}{logo}")
-
     print("\nWelcome to Wander Wallet, your personal Travel Expense Tracker!\n")
     print("⏳ Checking if you have already started tracking travel expenses with us ...")
 
