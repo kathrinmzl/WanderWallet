@@ -86,13 +86,23 @@ def new_trip_info_valid(data_input, data_type):
 def int_input_valid(data_input):
     try:
         # Check if provided string can be transformed to an int object
-        int(data_input)
-    except ValueError:
+        try:
+            int_input = int(data_input)
+        except ValueError:
+            raise ValueError(
+                "Your input is not a whole number"
+                )
+
+        # Check if provided integer is positive
+        if int_input <= 0:
+            raise ValueError(
+                "The value must be larger than 0"
+            ) 
+    except ValueError as e:
         print(
-            Fore.RED + 
+            Fore.RED +
             Style.NORMAL + 
-            "\nInvalid data: Your input is not a whole number, "
-            "please try again.\n"
+            f"\nInvalid data: {e}, please try again.\n"
             )
         return False
     
