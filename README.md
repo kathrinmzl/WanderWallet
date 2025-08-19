@@ -1,38 +1,85 @@
-Link to deployed page on Heroku: [WanderWallet](https://wander-wallet-c4d586c6e78d.herokuapp.com/)
+# Wander Wallet
+
+“Wander Wallet” is a Python-based command-line application designed to help travelers track expenses and stay within budget while being on a trip. It is designed to give travelers a clear overview of their budget, tracked expenses and remaining funds while travelling. The application connects to Google Sheets to store and update trip information and expenses. As a user, I want to easily add new expenses, view my current financial status and stay on track with my travel budget.
+
+The website was created for educational purposes only.
+
+[Live page on Heroku](https://wander-wallet-c4d586c6e78d.herokuapp.com/)
+
+![Wander Wallet Website Start Screen](docs/start-screen.png) TODO
+
+![GitHub last commit](https://img.shields.io/github/last-commit/kathrinmzl/organizedLife?color=red)
+![GitHub contributors](https://img.shields.io/github/contributors/kathrinmzl/organizedLife?color=orange)
+![GitHub language count](https://img.shields.io/github/languages/count/kathrinmzl/organizedLife?color=yellow)
+![GitHub top language](https://img.shields.io/github/languages/top/kathrinmzl/organizedLife?color=green)
 
 
+- - -
 
+## User Experience (UX)
 
+### Site Goals
 
-![CI logo](https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png)
+- Business Goals: Provide a simple and reliable tool for managing travel budgets directly from the command line
 
-Welcome,
+- Users’ needs: Easily track trip expenses, stay on top of budgets and quickly understand whether they are spending within their limits
 
-This is the Code Institute student template for deploying your third portfolio project, the Python command-line project. The last update to this file was: **May 26, 2025**
+- Primary user: Travelers who want a simple way to manage their trip finances
 
-## Reminders
+### User Stories
 
-- Your code must be placed in the `run.py` file
-- Your dependencies must be placed in the `requirements.txt` file
-- Do not edit any of the other files or your code may not deploy properly
+#### Must-have
 
-## Creating the Heroku app
+1. As a user, I want to easily understand the main purpose of the app
 
-When you create the app, you will need to add two buildpacks from the _Settings_ tab. The ordering is as follows:
+2. As a user, I want to be able to create a new trip with a budget and dates
 
-1. `heroku/python`
-2. `heroku/nodejs`
+3. As a user, I want to see a clear summary of my trip, including budget, expenses and whether I am over, under or on budget
 
-You must then create a _Config Var_ called `PORT`. Set this to `8000`
+4. As a user, I want to add new expenses with a date and amount
 
-If you have credentials, such as in the Love Sandwiches project, you must create another _Config Var_ called `CREDS` and paste the JSON into the value field.
+5. As a user, I want to update an expense if I entered something incorrectly
 
-Connect your GitHub repository and deploy as normal.
+6. As a user, I want my data to be saved so that I can continue tracking expenses until the end of my trip
 
-## Constraints
+#### Should-have
 
-The deployment terminal is set to 80 columns by 24 rows. That means that each line of text needs to be 80 characters or less otherwise it will be wrapped onto a second line.
+7. As a user, I want feedback after adding or updating an expense so I know it worked
 
----
+8. As a user, I want the app to handle errors gracefully so it doesn’t crash unexpectedly
 
-Happy coding!
+#### Could-have
+
+9. As a user, I want to track multiple trips at once
+
+10. As a user, I want to categorize expenses (e.g., food, transport, accommodation)
+
+11. As a user, I want to see charts of my spending for better insights
+
+### Features to achieve the goals
+
+- The application will have a simple, clear command-line interface so users immediately understand its purpose
+
+- Users will be able to create a new trip by entering a trip name, budget and start/end dates
+
+- Users will be able to add new expenses for specified dates
+
+- Users will be able to update/correct an existing expense for a specific date
+
+- Users will be able to view a clear summary of their trip, showing total budget, spent amount, remaining funds and whether they are over, under, or on budget
+
+- Users will be able to see a list of expenses
+
+- The application will provide immediate feedback after adding or updating an expense to confirm the action succeeded
+
+- Trip and expense data will be stored in Google Sheets to ensure persistence and accessibility across devices
+
+- The app will handle errors gracefully to prevent crashes (e.g., invalid input)
+
+- Users will be able to track multiple trips independently (could-have)
+
+- Expenses can be categorized for better tracking and reporting (could-have)
+
+- Users will be able to view charts or visual summaries of spending by category or over time (could-have)
+
+- - -
