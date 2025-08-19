@@ -269,6 +269,18 @@ def add_expenses(trip, sheet_manager):
         print(f"🎉  Added new expense for {date_input}.\n")
         # print(trip.expenses)
     
+    # Sort dates, so that the expenses are saved and shown ordered by date
+    # print(trip.expenses)
+    # Zip dates and amounts together
+    combined = list(zip(trip.expenses['date'], trip.expenses['amount']))
+
+    # Sort by date (convert string to datetime to be able to order the dates)
+    combined.sort(key=lambda x: datetime.strptime(x[0], "%Y-%m-%d"))
+
+    # Unzip data back into dict
+    trip.expenses['date'], trip.expenses['amount'] = map(list, zip(*combined))
+    # print(trip.expenses)
+
     # Update trip_info dict with new expense data
     trip.update_trip_info()
 
