@@ -80,8 +80,8 @@ def get_new_trip_info():
         
         print(Style.BRIGHT + "What is the total budget for your trip?")
         print(
-            "Please enter your budget in whole numbers in Euros "
-            "(no cents or\ndecimal points)."
+            "Please enter your budget as a positive value in whole numbers\n"
+            "in Euros (no cents or decimal points)."
             )
         print("Example: 2500")
 
@@ -152,13 +152,13 @@ def start_new_trip(expenses, sheet_manager):
     return trip
 
 
-def get_new_expense(trip):
+def get_new_expense(trip, sheet_manager):
     """
     Ask user to get a new expense
     """
     while True:
         # Add expenses
-        add_expenses(trip)
+        add_expenses(trip, sheet_manager)
 
         print(trip.summary())
 
@@ -184,7 +184,7 @@ def get_new_expense(trip):
         return False
 
 
-def add_expenses(trip):
+def add_expenses(trip, sheet_manager):
     """
     Get new expense entry as user input
     """
@@ -244,8 +244,8 @@ def add_expenses(trip):
     while True:
         print(Style.BRIGHT + f"How much did you spend on {date_input}?")
         print(
-            "Please enter your expense in whole numbers in Euros "
-            "(no cents or\ndecimal points)."
+            "Please enter your expense as a positive amount in whole "
+            "numbers\nin Euros (no cents or decimal points)."
             )
         print("Example: 24")
 
@@ -273,8 +273,8 @@ def add_expenses(trip):
     trip.update_trip_info()
 
     # Save new trip info and expenses to worksheet
-    trip.sheet_manager.update_worksheet(trip.trip_info, "trip_info")
-    trip.sheet_manager.update_worksheet(trip.expenses, "expenses")
+    sheet_manager.update_worksheet(trip.trip_info, "trip_info")
+    sheet_manager.update_worksheet(trip.expenses, "expenses")
 
 
 def show_expenses_summary(trip):
@@ -375,7 +375,7 @@ def main():
             )   
 
     # Get new expense from user and check if they want to add another one
-    get_new_expense_input = get_new_expense(trip)
+    get_new_expense_input = get_new_expense(trip, sheet_manager)
 
     if not get_new_expense_input:
         # Check if user wants to see a list of all currently tracked expenses
