@@ -142,7 +142,7 @@ def start_new_trip(expenses, sheet_manager):
     # Get basic info for new trip
     new_trip_info = get_new_trip_info()
     # Set up Trip class and calculate trip_info values
-    trip = Trip(new_trip_info, expenses, sheet_manager)
+    trip = Trip(new_trip_info, expenses)
     trip.update_trip_info()
     # Save new trip info to worksheet
     sheet_manager.update_worksheet(trip.trip_info, "trip_info")
@@ -334,7 +334,7 @@ def main():
 
     trip_exists_answer = trip_exists(trip_info)
     if trip_exists_answer:
-        trip = Trip(trip_info, expenses, sheet_manager)
+        trip = Trip(trip_info, expenses)
         print(
             f"✅  Seems like you have been working on your trip "
             f"'{trip.trip_name}' already.\n"
