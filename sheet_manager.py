@@ -19,7 +19,8 @@ class SheetManager:
 
     def get_worksheet_dict(self, worksheet_name: str) -> dict:
         """
-        Return worksheet data as a dict with header names as keys and column values as lists.
+        Return worksheet data as a dict with header names as keys and 
+        column values as lists.
         """
         sheet = self.sheet.worksheet(worksheet_name)
         sheet_list = sheet.get_all_values()
@@ -33,10 +34,14 @@ class SheetManager:
             
         else:  # "expenses"
             # Extract keys and rows
-            keys = sheet_list[0]       # ['date', 'amount']
-            rows = sheet_list[1:]      # [['2025-08-20', '12'], ['2025-08-20', '34']]
+            # ['date', 'amount']
+            keys = sheet_list[0]  
+            # [['2025-08-20', '12'], ['2025-08-20', '34']]  
+            rows = sheet_list[1:]   
             # Create dict with list comprehensions
-            sheet_dict = {key: [row[i] for row in rows] for i, key in enumerate(keys)}
+            sheet_dict = {
+                key: [row[i] for row in rows] for i, key in enumerate(keys)
+                }
 
         return sheet_dict 
         

@@ -1,22 +1,25 @@
 from datetime import datetime
-from sheet_manager import SheetManager
-from colorama import Fore, Style, init
+from colorama import Style, init
 
 # Initialize Colorama (colors reset automatically after each print)
 init(autoreset=True)
+
 
 class Trip:
     """
     Trip class
     """
-    def __init__(self, trip_info: dict, expenses: dict, sheet_manager: SheetManager):
+    def __init__(self, trip_info: dict, expenses: dict):
         self.trip_info = trip_info
         self.expenses = expenses
-        self.sheet_manager = sheet_manager  # store the SheetManager instance
         # Get trip info input fields (for calculations)
         self.trip_name = trip_info["trip_name"]
-        self.start_date = datetime.strptime(trip_info["start_date"], "%Y-%m-%d").date()
-        self.end_date = datetime.strptime(trip_info["end_date"], "%Y-%m-%d").date()
+        self.start_date = datetime.strptime(
+            trip_info["start_date"], "%Y-%m-%d"
+            ).date()
+        self.end_date = datetime.strptime(
+            trip_info["end_date"], "%Y-%m-%d"
+            ).date()
         self.total_budget = int(trip_info["total_budget"])
 
     # Calculate different properties for trip info 
@@ -40,7 +43,8 @@ class Trip:
         """
         Calculate total expenses
         """
-        # If there are no expenses or max. 1 expense tracked, the "amount" is a single value instead of a list
+        # If there are no expenses or max. 1 expense tracked, the 
+        # "amount" is a single value instead of a list
         if not isinstance(self.expenses["amount"], list):
             if self.expenses["amount"] == "":
                 return 0
@@ -124,10 +128,14 @@ class Trip:
         else: 
             status_msg = "On track — keep spending balanced."
 
-        print(Style.BRIGHT + "Here is a summary of your current trip information:\n")
+        print(
+            Style.BRIGHT + 
+            "Here is a summary of your current trip information:\n"
+            )
         return (
             f"{'Trip Name:':20} {self.trip_name}\n"
-            f"{'Dates:':20} {self.start_date} - {self.end_date} ({self.duration} days)\n"
+            f"{'Dates:':20} {self.start_date} - {self.end_date} "
+            f"({self.duration} days)\n"
             f"{'Days Left:':20} {self.days_left} days\n"
 
             f"{'Total Budget:':20} {self.total_budget} €\n"
