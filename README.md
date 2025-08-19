@@ -83,3 +83,19 @@ The website was created for educational purposes only.
 - Users will be able to view charts or visual summaries of spending by category or over time (could-have)
 
 - - -
+
+## Design
+
+### Flowchart
+
+The following flowchart was created using [Lucidchart](https://lucid.app/) before starting to code, to visualize the intended general workflow of the application. During the development process, the workflow was adapted in certain areas to better fit technical requirements and improve user experience. While the flowchart represents the initial plan, some steps were modified or added in the final implementation.
+
+![Wander Wallet Initial Flowchart](docs/wander_wallet_flowchart.png)
+
+### Color Scheme/Imagery/Typography
+Although the application has a simple terminal-based interface with limited UI design, the following style choices were made to make user inputs, feedback, and overall interaction clear and easy to follow.
+
+Bold text is used to highlight anything directly concerning the user, such as their inputs or headings in summaries. Green text is used to signal valid user inputs, while red text indicates errors, invalid inputs or warnings.
+
+Emojis are used to indicate status messages and user inputs, helping to make the interface more engaging and easier to follow.
+
