@@ -261,12 +261,12 @@ def add_expenses(trip, sheet_manager):
         # Update value in expenses dict if date already exists
         date_index = trip.expenses["date"].index(date_input)
         trip.expenses["amount"][date_index] = amount_input
-        print(f"Updated expense for {date_input}.\n")
+        print(f"🎉  Updated expense for {date_input}.\n")
     else:
         # Add value in expenses dict if date doesn't exist yet
         trip.expenses["date"].append(date_input)
         trip.expenses["amount"].append(amount_input)
-        print(f"Added new expense for {date_input}.\n")
+        print(f"🎉  Added new expense for {date_input}.\n")
         # print(trip.expenses)
     
     # Update trip_info dict with new expense data
@@ -380,10 +380,12 @@ def main():
     if not get_new_expense_input:
         # Check if user wants to see a list of all currently tracked expenses
         show_expenses_summary(trip)
-        print("\nThank you for using Wander Wallet!")
+        print("\n🎉  Thank you for using Wander Wallet!\n")
+        # Show trip summary
+        print(trip.summary())
         print(
             "Come back to this app to add some more expenses to "
-            "your trip or\nset up a new one!"
+            "your trip or\nset up a new one!\n"
             )
         print("See you next time!\n")
         print("End of program")
