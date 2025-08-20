@@ -1,6 +1,6 @@
 # Wander Wallet
 
-“Wander Wallet” is a Python-based command-line application designed to help travelers track expenses and stay within budget while being on a trip. It is designed to give travelers a clear overview of their budget, tracked expenses and remaining funds while travelling. The application connects to Google Sheets to store and update trip information and expenses. As a user, I want to easily add new expenses, view my current financial status and stay on track with my travel budget.
+“Wander Wallet” is a Python-based command-line application designed to help travelers track expenses and stay within budget while being on a trip. It is designed to give travelers a clear overview of their budget, tracked expenses and remaining funds while travelling. The application uses the Google Cloud API to connect to Google Sheets to store and update trip information and expenses. As a user, I want to easily add new expenses, view my current financial status and stay on track with my travel budget.
 
 The website was created for educational purposes only.
 
@@ -283,6 +283,9 @@ Provide visualizations (e.g. bar charts, line charts) to give users a clearer un
 - *Main menu navigation*  
 Instead of being guided strictly through the workflow, offer a menu at the start of the program where the user can choose what they want to do (e.g. set up a new trip, add expenses, view expenses, update expenses or see a summary).
 
+- *User accounts and login system*  
+Implement a simple authentication system so multiple users can store and access their own trips independently. This would allow different travelers to use the app at the same time without interfering with each other’s data.
+
 These features would significantly improve the overall user experience and make the application more powerful in supporting effective budget tracking.
 
 ## Testing
@@ -321,13 +324,17 @@ Github - To save and store the files for the website
 
 Visual Studio Code - For local development
 
-Python libraries - colorama, datetime, gspread, google-auth
-
 Google Cloud API - For access to Google services used by the app
 
-- Google Sheets API: Handles all reading and writing of trip data and expenses to a connected Google Sheets document. This serves as the main database for the application
+- Google Sheets API - Handles all reading and writing of trip data and expenses to a connected Google Sheets document. This serves as the main database for the application
 
-- Google Drive API: Manages access permissions and enables the application to locate and update the correct worksheet
+- Google Drive API - Manages access permissions and enables the application to locate and update the correct worksheet
+
+Python libraries:
+- colorama - To style the output displayed in the console
+- datetime - To handle the "date" user inputs
+- gspread - Access and update data in the Google Sheets spreadsheet
+- google-auth - Set up the authentication needed to access the Google Cloud project
 
 - - -
 
