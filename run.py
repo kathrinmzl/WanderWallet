@@ -267,10 +267,8 @@ def add_expenses(trip, sheet_manager):
         trip.expenses["date"].append(date_input)
         trip.expenses["amount"].append(amount_input)
         print(f"🎉  Added new expense for {date_input}.\n")
-        # print(trip.expenses)
     
     # Sort dates, so that the expenses are saved and shown ordered by date
-    # print(trip.expenses)
     # Zip dates and amounts together
     combined = list(zip(trip.expenses['date'], trip.expenses['amount']))
 
@@ -279,7 +277,6 @@ def add_expenses(trip, sheet_manager):
 
     # Unzip data back into dict
     trip.expenses['date'], trip.expenses['amount'] = map(list, zip(*combined))
-    # print(trip.expenses)
 
     # Update trip_info dict with new expense data
     trip.update_trip_info()
@@ -392,14 +389,21 @@ def main():
     if not get_new_expense_input:
         # Check if user wants to see a list of all currently tracked expenses
         show_expenses_summary(trip)
-        print("\n🎉  Thank you for using Wander Wallet!\n")
-        # Show trip summary
+        # Add an empty input forcing the app to pause before showing the 
+        # summary in the next step
+        input(
+            Style.BRIGHT + 
+            "\nPress ENTER to continue to your trip summary and "
+            "end the program\n"
+            )
+        # Show trip summary and then end the program
         print(trip.summary())
+        print("🎉  Thank you for using Wander Wallet!\n")
         print(
             "Come back to this app to add some more expenses to "
             "your trip or\nset up a new one!\n"
             )
-        print("See you next time!\n")
+        print("See you next time!\n\n")
         print("End of program")
         return
     
@@ -415,15 +419,3 @@ while True:
         print(Fore.RED + Style.NORMAL + "We will restart the app for you.")
         # Restart app if main function throws an unhandled error
         continue
-
-    # except KeyboardInterrupt:
-    #     print(Fore.RED + 
-    # Style.NORMAL + "\nAn unexpected error occurred: Ctrl+C detected\n")
-    #     print(Fore.RED + Style.NORMAL + "We will restart the app for you.")
-    #     # Restart app instead of exiting
-    #     continue  
-
-
-# To Do: Add restriction that no changes can be made 
-# if the trip is already over -> 
-
