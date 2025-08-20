@@ -1,4 +1,5 @@
 from datetime import datetime
+import re
 from colorama import Fore, Style, init
 
 # Initialize Colorama (colors reset automatically after each print)
@@ -15,7 +16,12 @@ def new_trip_info_valid(data_input, data_type):
                 raise ValueError(
                     f"Min. 1 and not more than 30 characters allowed,\n"
                     f"you provided {len(data_input)}"
-                )    
+                )   
+            if not re.fullmatch(r"[A-Za-z0-9 ]+", data_input):
+                raise ValueError(
+                    "Trip name can only contain letters (A–Z), numbers (0–9)\n"
+                    "and spaces"
+                )
         except ValueError as e:
             print(
                 Fore.RED + 

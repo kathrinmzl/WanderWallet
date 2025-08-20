@@ -121,7 +121,8 @@ If no active trip is found, the user is guided through creating one. The setup p
 
 Trip Name:
 
-- Trip name must not be empty
+- Trip name cannot be empty
+- Can only contain letters (A–Z), numbers (0–9) and spaces
 - 1-30 characters
 
 ![New trip name input](docs/features/new-trip-name-input.png)
@@ -341,6 +342,8 @@ Python libraries:
 ## Deployment & Local Development
 
 ### Deployment
+
+todo: describe how to set up google sheets
 
 Heroku was used to deploy the live application. The instructions to achieve this are below:
 

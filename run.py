@@ -47,6 +47,9 @@ def get_new_trip_info():
             Style.BRIGHT +
             "Please enter a name for your new trip "
             "(1 - 30 characters).")
+        print(
+            "It can only contain letters (A–Z), numbers (0–9) "
+            "and spaces.")
         print("Example: Italy Summer 2025")
 
         trip_name_input = input(
