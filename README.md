@@ -8,10 +8,10 @@ The website was created for educational purposes only.
 
 ![Wander Wallet Website Start Screen](docs/start-screen.png)
 
-![GitHub last commit](https://img.shields.io/github/last-commit/kathrinmzl/organizedLife?color=red)
-![GitHub contributors](https://img.shields.io/github/contributors/kathrinmzl/organizedLife?color=orange)
-![GitHub language count](https://img.shields.io/github/languages/count/kathrinmzl/organizedLife?color=yellow)
-![GitHub top language](https://img.shields.io/github/languages/top/kathrinmzl/organizedLife?color=green)
+![GitHub last commit](https://img.shields.io/github/last-commit/kathrinmzl/WanderWallet?color=red)
+![GitHub contributors](https://img.shields.io/github/contributors/kathrinmzl/WanderWallet?color=orange)
+![GitHub language count](https://img.shields.io/github/languages/count/kathrinmzl/WanderWallet?color=yellow)
+![GitHub top language](https://img.shields.io/github/languages/top/kathrinmzl/WanderWallet?color=green)
 
 
 - - -
@@ -268,3 +268,124 @@ Additionally, a general error handling mechanism is implemented by wrapping the 
 
 
 ### Future Features
+
+So far, the application includes all necessary features to create a minimum viable product. However, there is room for improvement and further functionality to enhance usability and flexibility for travelers:
+
+- *Track multiple trips at once*  
+Allow users to manage several trips in parallel instead of only focusing on a single active trip.
+
+- *Expense categories*  
+Add the option to assign categories such as food, transport, or accommodation to expenses, making it easier to analyze spending patterns.
+
+- *Spending charts and visual insights*  
+Provide visualizations (e.g. bar charts, line charts) to give users a clearer understanding of their budget usage and spending behavior.
+
+- *Main menu navigation*  
+Instead of being guided strictly through the workflow, offer a menu at the start of the program where the user can choose what they want to do (e.g. set up a new trip, add expenses, view expenses, update expenses or see a summary).
+
+These features would significantly improve the overall user experience and make the application more powerful in supporting effective budget tracking.
+
+## Testing
+
+### Manual Testing
+
+#### Scope
+
+#### Results
+
+### Code Validation
+
+### User Story Testing
+
+### Known Bugs 
+
+- - -
+
+## Technologies Used
+
+### Languages Used
+
+Python was used to create this application. 
+
+All other code inside this project has been provided by the [Python Essentials Template](https://github.com/Code-Institute-Org/python-essentials-template) by Code Institute.
+
+### Frameworks, Libraries & Programs Used
+
+[Lucidchart](https://lucid.app/) - Used to create the flowchart
+
+[Shields.io](https://shields.io/) - To add badges to the README
+
+Git - For version control
+
+Github - To save and store the files for the website
+
+Visual Studio Code - For local development
+
+Python libraries - colorama, datetime, gspread, google-auth
+
+Google Cloud API - For access to Google services used by the app
+
+- Google Sheets API: Handles all reading and writing of trip data and expenses to a connected Google Sheets document. This serves as the main database for the application
+
+- Google Drive API: Manages access permissions and enables the application to locate and update the correct worksheet
+
+- - -
+
+## Deployment & Local Development
+
+### Deployment
+
+Heroku was used to deploy the live application. The instructions to achieve this are below:
+
+- Clone or fork this public repository
+- Create a Heroku account (if not already existing)
+- Create a new app with Heroku
+- In **Settings**:
+    - Add 2 buildpacks in the following order:
+        1. `heroku/python`
+        2. `heroku/nodejs`  
+
+        Ensure the buildpacks are created in that order!
+    - Create *Config Vars*:
+        1. `PORT`: Set this to `8000`
+        2. `CREDS`: Set this to your JSON
+
+- Allow Heroku access to GitHub, link the new app to the relevant repository
+- Choose whether or not to enable **Automatic Deploys**. If enabled, the deployed app will update automatically with each push to GitHub
+- Click **Deploy**
+
+Link to the deployed application: [https://wander-wallet-c4d586c6e78d.herokuapp.com/](https://wander-wallet-c4d586c6e78d.herokuapp.com/)
+
+### Local Development
+
+#### How to Fork
+
+To fork the WanderWallet repository:
+
+1. Log in (or sign up) to Github.
+2. Go to the repository for this project, kathrinmzl/WanderWallet.
+3. Click the Fork button in the top right corner.
+
+#### How to Clone
+
+To clone the WanderWallet repository:
+
+1. Log in (or sign up) to GitHub.
+2. Go to the repository for this project, kathrinmzl/WanderWallet.
+3. Click on the code button, select whether you would like to clone with HTTPS, SSH or GitHub CLI and copy the link shown.
+4. Open the terminal in your code editor and change the current working directory to the location you want to use for the cloned directory.
+5. Type 'git clone' into the terminal and then paste the link you copied in step 3. Press enter.
+
+- - -
+
+## Credits
+
+### Code Used
+
+**Template and Terminal**: [Python Essentials Template](https://github.com/Code-Institute-Org/python-essentials-template) provided by Code Institute
+
+
+### Content
+
+The content for the application was written by myself. Some parts of this README were refined with the help of ChatGPT to improve clarity and phrasing.
+
