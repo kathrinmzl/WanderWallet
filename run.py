@@ -2,6 +2,7 @@
 # import gspread
 # from google.oauth2.service_account import Credentials
 from datetime import datetime
+import time
 from trip import Trip
 from sheet_manager import SheetManager
 from validation import (
@@ -14,6 +15,14 @@ from colorama import Fore, Style, init
 
 # Initialize Colorama (colors reset automatically after each print)
 init(autoreset=True)
+
+
+# From https://stackoverflow.com/questions/2084508/clear-the-terminal-in-python
+def clear():
+    """
+    Clear function to clean-up the terminal so things don't get messy
+    """
+    print("\033c")
 
 
 def trip_exists(trip_info_data):
@@ -109,7 +118,7 @@ def continue_trip():
     Get input if the user wants to continue with the current trip or 
     start a new one
     """
-    # Trip Name Input
+    # continue trip Input
     while True:
         
         print(Style.BRIGHT + "\nDo you want to continue working on this trip?")
@@ -127,6 +136,9 @@ def continue_trip():
         if yes_no_input_valid(yes_no_input):
             print(Fore.GREEN + Style.NORMAL + "Data is valid!\n")
             break
+
+    time.sleep(1)
+    clear()
     
     if yes_no_input == "yes":
         return True
@@ -138,6 +150,9 @@ def start_new_trip(expenses, sheet_manager):
     """
     Initialize new trip
     """
+    time.sleep(1)
+    clear()
+
     print("✅  No trip found. Let's set up a new trip.\n")
     # Get basic info for new trip
     new_trip_info = get_new_trip_info()
@@ -146,6 +161,8 @@ def start_new_trip(expenses, sheet_manager):
     trip.update_trip_info()
     # Save new trip info to worksheet
     sheet_manager.update_worksheet(trip.trip_info, "trip_info")
+    time.sleep(2)
+    clear()
     # Show trip summary
     print(trip.summary())
 
@@ -235,6 +252,8 @@ def add_expenses(trip, sheet_manager):
                     break
                 
             if yes_no_input == "no":
+                time.sleep(1)
+                clear()
                 print("Okay, we will keep the old expense for this date.\n")
                 return  # Exit the method without changing anything
             
@@ -261,12 +280,12 @@ def add_expenses(trip, sheet_manager):
         # Update value in expenses dict if date already exists
         date_index = trip.expenses["date"].index(date_input)
         trip.expenses["amount"][date_index] = amount_input
-        print(f"🎉  Updated expense for {date_input}.\n")
+        update_amount = True
     else:
         # Add value in expenses dict if date doesn't exist yet
         trip.expenses["date"].append(date_input)
         trip.expenses["amount"].append(amount_input)
-        print(f"🎉  Added new expense for {date_input}.\n")
+        update_amount = False
     
     # Sort dates, so that the expenses are saved and shown ordered by date
     # Zip dates and amounts together
@@ -284,6 +303,14 @@ def add_expenses(trip, sheet_manager):
     # Save new trip info and expenses to worksheet
     sheet_manager.update_worksheet(trip.trip_info, "trip_info")
     sheet_manager.update_worksheet(trip.expenses, "expenses")
+
+    time.sleep(2)
+    clear()
+
+    if update_amount:
+        print(f"🎉  Updated expense for {date_input} ({amount_input} €).\n")
+    else:
+        print(f"🎉  Added new expense for {date_input} ({amount_input} €).\n")
 
 
 def show_expenses_summary(trip):
@@ -344,6 +371,8 @@ def main():
     trip_exists_answer = trip_exists(trip_info)
     if trip_exists_answer:
         trip = Trip(trip_info, expenses)
+        time.sleep(1)
+        clear()
         print(
             f"✅  Seems like you have been working on your trip "
             f"'{trip.trip_name}' already.\n"
@@ -369,24 +398,27 @@ def main():
     # Check if the trip has already started, if not, end the program, 
     # otherwise continue
     if trip.start_date > today:
-        print("Thank you for setting up your trip with Wander Wallet!")
+        print("🎉  Thank you for setting up your trip with Wander Wallet!\n")
         print("Your trip hasn't started yet.")
         print(
             "Return to Wander Wallet once your trip starts and you want "
-            "to start\ntracking expenses!\n"
+            "to start\ntracking expenses!\n\n"
             )
         print("End of program")
         return
     else:
         print(
-            "Great! Your trip has already started! " 
-            "Let's start adding some expenses.\n"
+            f"Great! Your trip has already started "
+            f"({trip.start_date} - {trip.end_date})!\n" 
+            f"Let's start adding some expenses.\n"
             )   
 
     # Get new expense from user and check if they want to add another one
     get_new_expense_input = get_new_expense(trip, sheet_manager)
 
     if not get_new_expense_input:
+        time.sleep(1)
+        clear()
         # Check if user wants to see a list of all currently tracked expenses
         show_expenses_summary(trip)
         # Add an empty input forcing the app to pause before showing the 
@@ -396,14 +428,15 @@ def main():
             "\nPress ENTER to continue to your trip summary and "
             "end the program\n"
             )
+        time.sleep(1)
+        clear()
         # Show trip summary and then end the program
         print(trip.summary())
-        print("🎉  Thank you for using Wander Wallet!\n")
+        print("\n🎉  Thank you for using Wander Wallet!\n")
         print(
             "Come back to this app to add some more expenses to "
-            "your trip or\nset up a new one!\n"
+            "your trip or\nset up a new one! See you next time!\n\n"
             )
-        print("See you next time!\n\n")
         print("End of program")
         return
     
@@ -411,7 +444,9 @@ def main():
 # Add if statement so that the program only runs the main loop when it's 
 # launched directly, not when it's imported elsewhere
 if __name__ == "__main__":
-    
+    # Call clear function to remove "running startup command" console output
+    # when program starts
+    clear()
     while True:
         try:
             main()
