@@ -52,7 +52,7 @@ The website was created for educational purposes only.
 
 9. As a user, I want to track multiple trips at once
 
-10. As a user, I want to categorize expenses (e.g., food, transport, accommodation)
+10. As a user, I want to categorize expenses (e.g. food, transport, accommodation)
 
 11. As a user, I want to see charts of my spending for better insights
 
@@ -265,3 +265,6 @@ All input validation functions are organized in a dedicated validation.py file. 
 4. New trip information: Validates the trip name, dates and total budget according to the required restrictions
 
 Additionally, a general error handling mechanism is implemented by wrapping the main function in a `try`/`except` block to catch any unexpected errors. Examples of such errors include connection issues with Google Sheets or file read/write problems. If such an error occurs, the application will restart automatically with the latest version of data that was successfully added to the database.
+
+
+### Future Features
