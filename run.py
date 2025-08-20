@@ -408,14 +408,18 @@ def main():
         return
     
 
-while True:
-    try:
-        main()
-        # Exit if main function finishes without error
-        break
-    except Exception as e:
-        print(Fore.RED + Style.NORMAL + "\nAn unexpected error occurred.")
-        print(Fore.RED + Style.NORMAL + f"Details: {e}\n")
-        print(Fore.RED + Style.NORMAL + "We will restart the app for you.")
-        # Restart app if main function throws an unhandled error
-        continue
+# Add if statement so that the program only runs the main loop when it's 
+# launched directly, not when it's imported elsewhere
+if __name__ == "__main__":
+    
+    while True:
+        try:
+            main()
+            # Exit if main function finishes without error
+            break
+        except Exception as e:
+            print(Fore.RED + Style.NORMAL + "\nAn unexpected error occurred.")
+            print(Fore.RED + Style.NORMAL + f"Details: {e}\n")
+            print(Fore.RED + Style.NORMAL + "We will restart the app for you.")
+            # Restart app if main function throws an unhandled error
+            continue
