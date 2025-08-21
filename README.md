@@ -31,31 +31,39 @@ The website was created for educational purposes only.
 
 #### Must-have
 
-1. As a user, I want to easily understand the main purpose of the app
+1. As a user, I want to easily understand the main purpose of the app,
+so I know right away how it helps me.
 
-2. As a user, I want to be able to create a new trip with a budget and dates
+2. As a user, I want to be able to create a new trip with a budget and dates,
+so I can set the financial framework for my travels.
 
-3. As a user, I want to see a clear summary of my trip, including budget, expenses and whether I am over, under or on budget
+3. As a user, I want to see a clear summary of my trip, including budget, expenses and whether I am over, under or on budget,
+so I always know my financial status.
 
-4. As a user, I want to add new expenses with a date and amount
+4. As a user, I want to add new expenses with a date and amount,
+so I can keep an accurate record of my spending.
 
-5. As a user, I want to update an expense if I entered something incorrectly
+5. As a user, I want to update an expense if I entered something incorrectly,
+so my data stays accurate.
 
-6. As a user, I want my data to be saved so that I can continue tracking expenses until the end of my trip
+6. As a user, I want my data to be saved so that I can continue tracking expenses until the end of my trip,
+so I don’t lose progress during the journey.
 
 #### Should-have
 
-7. As a user, I want feedback after adding or updating an expense so I know it worked
+7. As a user, I want feedback after adding or updating an expense,
+so I know my action was successful.
 
-8. As a user, I want the app to handle errors gracefully so it doesn’t crash unexpectedly
+8. As a user, I want the app to handle errors gracefully so it doesn’t crash unexpectedly,
+so I can keep using it without interruptions.
 
 #### Could-have
 
-9. As a user, I want to track multiple trips at once
+9. As a user, I want to categorize expenses (e.g. food, transport, accommodation),
+so I can see where my money goes.
 
-10. As a user, I want to categorize expenses (e.g. food, transport, accommodation)
-
-11. As a user, I want to see charts of my spending for better insights
+10. As a user, I want to see charts of my spending for better insights,
+so I can quickly spot patterns.
 
 ### Features to achieve the goals
 
@@ -76,8 +84,6 @@ The website was created for educational purposes only.
 - Trip and expense data will be stored in Google Sheets to ensure persistence and accessibility across devices
 
 - The app will handle errors gracefully to prevent crashes (e.g., invalid input)
-
-- Users will be able to track multiple trips independently (could-have)
 
 - Expenses can be categorized for better tracking and reporting (could-have)
 
@@ -273,9 +279,6 @@ Additionally, a general error handling mechanism is implemented by wrapping the 
 
 So far, the application includes all necessary features to create a minimum viable product. However, there is room for improvement and further functionality to enhance usability and flexibility for travelers:
 
-- *Track multiple trips at once*  
-Allow users to manage several trips in parallel instead of only focusing on a single active trip.
-
 - *Expense categories*  
 Add the option to assign categories such as food, transport, or accommodation to expenses, making it easier to analyze spending patterns.
 
@@ -292,17 +295,7 @@ These features would significantly improve the overall user experience and make 
 
 ## Testing
 
-### Manual Testing
-
-#### Scope
-
-#### Results
-
-### Code Validation
-
-### User Story Testing
-
-### Known Bugs 
+> NOTE: For all testing, please refer to the [TESTING.md](TESTING.md) file.
 
 - - -
 
@@ -580,7 +573,7 @@ Other helpful resources were as follows:
 
 | Source | Notes |
 | --- | --- |
-| [Markdown Builder](https://markdown.2bn.dev) | Help generating the Deployment section of this README |
+| [Markdown Builder](https://markdown.2bn.dev) | Help generating the Deployment and Testing section of this README |
 | [StackOverflow](https://stackoverflow.com/a/50921841) | Clear screen function in Python |
 | [ChatGPT](https://chatgpt.com) | Help with code logic and explanations as well as improving clarity and phrasing within the README|
 | [Python Essentials Template](https://github.com/Code-Institute-Org/python-essentials-template) | Template and Terminal provided by Code Institute |
