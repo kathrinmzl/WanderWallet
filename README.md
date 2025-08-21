@@ -12,6 +12,7 @@ The website was created for educational purposes only.
 ![GitHub contributors](https://img.shields.io/github/contributors/kathrinmzl/WanderWallet?color=orange)
 ![GitHub language count](https://img.shields.io/github/languages/count/kathrinmzl/WanderWallet?color=yellow)
 ![GitHub top language](https://img.shields.io/github/languages/top/kathrinmzl/WanderWallet?color=green)
+[![badge](https://img.shields.io/badge/deployment-Heroku-purple)](https://wander-wallet-c4d586c6e78d.herokuapp.com)
 
 
 - - -
@@ -161,7 +162,7 @@ Trip has not started yet:
 
 #### Working with an already existing trip
 
-When, upon starting the app, a trip already exists in the database, the user is first shown a summary of their current trip, like described under (#Start-Screen).
+When, upon starting the app, a trip already exists in the database, the user is first shown a summary of their current trip, like described under [Start Screen](#start-screen).
 
 Then the user can choose to show a list of all currently tracked expenses, by submitting a "yes" or "no" into the following input field.
 
@@ -319,6 +320,8 @@ All other code inside this project has been provided by the [Python Essentials T
 
 [Shields.io](https://shields.io/) - To add badges to the README
 
+Chat GPT - Help debug, troubleshoot and explain things
+
 Git - For version control
 
 Github - To save and store the files for the website
@@ -334,9 +337,87 @@ Google Cloud API - For access to Google services used by the app
 Python libraries:
 - colorama - To style the output displayed in the console
 - datetime - To handle the "date" user inputs
+- re - To handle trip name input
+- time - To pause execution of code
 - gspread - Access and update data in the Google Sheets spreadsheet
 - google-auth - Set up the authentication needed to access the Google Cloud project
 
+- - -
+
+## Data Model
+
+#### Classes & Functions
+
+The program uses two classes as a blueprint for the project's object-oriented programming (OOP). This allows for the objects to be reusable and callable where necessary.
+
+```python
+class Trip:
+    """
+    Trip class
+    """
+    def __init__(self, trip_info: dict, expenses: dict):
+        self.trip_info = trip_info
+        self.expenses = expenses
+        # Get trip info input fields (for calculations)
+        self.trip_name = trip_info["trip_name"]
+        self.start_date = datetime.strptime(
+            trip_info["start_date"], "%Y-%m-%d"
+            ).date()
+        self.end_date = datetime.strptime(
+            trip_info["end_date"], "%Y-%m-%d"
+            ).date()
+        self.total_budget = int(trip_info["total_budget"])
+```
+The `Trip` class is the core data model of the app, designed to store trip details and expenses while automatically calculating useful statistics like duration, daily budget, spending status and remaining balance. It also includes one of the main functions of the app that shows the trip summary to the user.
+
+```python
+class SheetManager:
+    """
+    Sheet Manager class
+    """
+    def __init__(self, creds_file: str, sheet_name: str):
+        SCOPE = [
+            "https://www.googleapis.com/auth/spreadsheets",
+            "https://www.googleapis.com/auth/drive.file",
+            "https://www.googleapis.com/auth/drive"
+            ]
+        CREDS = Credentials.from_service_account_file(creds_file)
+        SCOPED_CREDS = CREDS.with_scopes(SCOPE)
+        self.client = gspread.authorize(SCOPED_CREDS)
+        self.sheet = self.client.open(sheet_name)
+```
+The `SheetManager` class handles all interactions with Google Sheets, making it easy to read, update and clear trip data from the connected spreadsheet. It separates storage logic from the main application, so the app can focus on budgeting features while this class reliably manages data access in the background.
+
+The primary functions used on this application are:
+
+- Validation functions in `validation.py`
+    - Check validaity of all user inputs. See [Error Handling](#error-handling) for more details.
+- `trip_exists()`
+    - Check if trip exists already
+- `get_new_trip_info()`
+    - Get info for a new trip (start, end dates, trip name, budget)
+- `continue_trip()`
+    - Get input if the user wants to continue with the current trip or start a new one
+- `start_new_trip()`
+    - Initialize new trip
+- `add_expenses()`
+    - Get new expense entry as user input
+- `get_new_expense()`
+    -  Loop to handle asking the user to add another expense
+- `show_expenses_summary()`
+    - Check if user wants to see a list of all currently tracked expenses
+- `main()`
+    - Run all program functions.
+
+#### Google Sheets
+
+The application uses a Google Spreadsheet with two worksheets to store all trip-related data:
+
+- `trip_info`: Stores the main trip details (trip name, dates and total budget) together with calculated values such as duration, days left, remaining budget and budget status.
+
+- `expenses`: Stores all user-entered expenses with two columns: date and amount. 
+
+Together, these worksheets ensure that both user input and automatically calculated data are saved, persistent and always up to date.
 - - -
 
 ## Deployment & Local Development
