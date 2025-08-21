@@ -424,59 +424,169 @@ Together, these worksheets ensure that both user input and automatically calcula
 
 ### Deployment
 
-todo: describe how to set up google sheets
+Code Institute has provided a [template](https://github.com/Code-Institute-Org/python-essentials-template) to display the terminal view of this backend application in a modern web browser. This is to improve the accessibility of the project to others.
 
-Heroku was used to deploy the live application. The instructions to achieve this are below:
+The live deployed application can be found deployed on [Heroku](https://wander-wallet-c4d586c6e78d.herokuapp.com).
 
-- Clone or fork this public repository
-- Create a Heroku account (if not already existing)
-- Create a new app with Heroku
-- In **Settings**:
-    - Add 2 buildpacks in the following order:
-        1. `heroku/python`
-        2. `heroku/nodejs`  
+### Heroku Deployment
 
-        Ensure the buildpacks are created in that order!
-    - Create *Config Vars*:
-        1. `PORT`: Set this to `8000`
-        2. `CREDS`: Set this to your JSON
+This project uses [Heroku](https://www.heroku.com), a platform as a service (PaaS) that enables developers to build, run, and operate applications entirely in the cloud.
 
-- Allow Heroku access to GitHub, link the new app to the relevant repository
-- Choose whether or not to enable **Automatic Deploys**. If enabled, the deployed app will update automatically with each push to GitHub
-- Click **Deploy**
+Deployment steps are as follows, after account setup:
 
-Link to the deployed application: [https://wander-wallet-c4d586c6e78d.herokuapp.com/](https://wander-wallet-c4d586c6e78d.herokuapp.com/)
+- Select **New** in the top-right corner of your Heroku Dashboard, and select **Create new app** from the dropdown menu.
+- Your app name must be unique, and then choose a region closest to you (EU or USA), then finally, click **Create App**.
+- From the new app **Settings**, click **Reveal Config Vars**, and set the value of **KEY** to `PORT`, and the **VALUE** to `8000` then select **ADD**.
+- If using any confidential credentials, such as **CREDS.JSON**, then these should be pasted in the Config Variables as well.
+- Further down, to support dependencies, select **Add Buildpack**.
+- The order of the buildpacks is important; select `Python` first, then `Node.js` second. (if they are not in this order, you can drag them to rearrange them)
+
+Heroku needs some additional files in order to deploy properly.
+
+- [requirements.txt](requirements.txt)
+- [Procfile](Procfile)
+- [.python-version](.python-version)
+
+You can install this project's **[requirements.txt](requirements.txt)** (*where applicable*) using:
+
+- `pip3 install -r requirements.txt`
+
+If you have your own packages that have been installed, then the requirements file needs updated using:
+
+- `pip3 freeze --local > requirements.txt`
+
+The **[Procfile](Procfile)** can be created with the following command:
+
+- `echo web: node index.js > Procfile`
+
+The **[.python-version](.python-version)** file tells Heroku the specific version of Python to use when running your application.
+
+- `3.12` (or similar)
+
+For Heroku deployment, follow these steps to connect your own GitHub repository to the newly created app:
+
+Either (*recommended*):
+
+- Select **Automatic Deployment** from the Heroku app.
+
+Or:
+
+- In the Terminal/CLI, connect to Heroku using this command: `heroku login -i`
+- Set the remote for Heroku: `heroku git:remote -a app_name` (*replace `app_name` with your app name*)
+- After performing the standard Git `add`, `commit`, and `push` to GitHub, you can now type:
+    - `git push heroku main`
+
+The Python terminal window should now be connected and deployed to Heroku!
+
+### Google Sheets API
+
+This application uses [Google Sheets](https://docs.google.com/spreadsheets) to handle a "makeshift" database on the live site.
+
+To run your own version of this application, you will need to create your own Google Sheet with two sheets named `trip_info` and `expenses`. Both sheets only include entries within their first row, containing the column names. Other than that, the sheets should be left empty.
+
+The column names for the respective sheets are as follows:
+
+`trip_info`:
+
+- trip_name 
+- start_date 
+- end_date  
+- total_budget 
+- duration  
+- days_left 
+- total_spent 
+- remaining_budget 
+- daily_budget 
+- avg_daily_spent 
+- budget_status
+
+`expenses`:
+
+- date 
+- amount 
+
+A credentials file in `.JSON` format from the Google Cloud Platform is also mandatory:
+
+[Google Cloud Platform](https://console.cloud.google.com)
+
+1. From the dashboard click on "Select a project", and then the **NEW PROJECT** button.
+2. Give the project a name, and then click **CREATE**.
+3. Click **SELECT PROJECT** to get to the project page.
+4. From the side-menu, select "APIs & Services", then select "Library".
+5. Search for the "Google Drive API", select it, and then click on **ENABLE**.
+6. Click on the **CREATE CREDENTIALS** button.
+7. From the "Which API are you using?" dropdown menu, choose **Google Drive API**.
+8. For the "What data will you be accessing?" question, select **Application Data**.
+9. Click **Next**.
+10. Enter a "Service Account" name, then click **Create**.
+11. In the "Role" dropdown box, choose "Basic" > "Editor", then press **Continue**.
+12. "Grant users access to this service account" can be left blank. Click **DONE**.
+13. On the next page, click on the "Service Account" that has been created.
+14. On the next page, click on the "Keys" tab.
+15. Click on the "Add Key" dropdown, and select "Create New Key".
+16. Select `JSON`, and then click **Create**. This will trigger the `.json` file with your API credentials in it to download to your machine locally.
+17. For local deployment, this needs to be renamed to `creds.json`.
+18. Repeat steps 4 & 5 above to add the "Google Sheets API".
+19. Copy the `client_email` that is in the `creds.json` file.
+20. Share your Google Sheet to the `client_email`, ensuring "Editing" is enabled.
+21. Add the `creds.json` file to your `.gitignore` file, so as not to push your credentials to GitHub publicly.
+
 
 ### Local Development
 
-#### How to Fork
+This project can be cloned or forked in order to make a local copy on your own system.
 
-To fork the WanderWallet repository:
+For either method, you will need to install any applicable packages found within the [requirements.txt](requirements.txt) file.
 
-1. Log in (or sign up) to Github.
-2. Go to the repository for this project, kathrinmzl/WanderWallet.
-3. Click the Fork button in the top right corner.
+- `pip3 install -r requirements.txt`.
 
-#### How to Clone
+If using any confidential credentials, such as `CREDS.json` or `env.py` data, these will need to be manually added to your own newly created project as well.
 
-To clone the WanderWallet repository:
+#### Cloning
 
-1. Log in (or sign up) to GitHub.
-2. Go to the repository for this project, kathrinmzl/WanderWallet.
-3. Click on the code button, select whether you would like to clone with HTTPS, SSH or GitHub CLI and copy the link shown.
-4. Open the terminal in your code editor and change the current working directory to the location you want to use for the cloned directory.
-5. Type 'git clone' into the terminal and then paste the link you copied in step 3. Press enter.
+You can clone the repository by following these steps:
+
+1. Go to the [GitHub repository](https://www.github.com/kathrinmzl/WanderWallet).
+2. Locate and click on the green "Code" button at the very top, above the commits and files.
+3. Select whether you prefer to clone using "HTTPS", "SSH", or "GitHub CLI", and click the "copy" button to copy the URL to your clipboard.
+4. Open "Git Bash" or "Terminal".
+5. Change the current working directory to the location where you want the cloned directory.
+6. In your IDE Terminal, type the following command to clone the repository:
+    - `git clone https://www.github.com/kathrinmzl/WanderWallet.git`
+7. Press "Enter" to create your local clone.
+
+#### Forking
+
+By forking the GitHub Repository, you make a copy of the original repository on our GitHub account to view and/or make changes without affecting the original owner's repository. You can fork this repository by using the following steps:
+
+1. Log in to GitHub and locate the [GitHub Repository](https://www.github.com/kathrinmzl/WanderWallet).
+2. At the top of the Repository, just below the "Settings" button on the menu, locate and click the "Fork" Button.
+3. Once clicked, you should now have a copy of the original repository in your own GitHub account!
+
+### Local VS Deployment
+
+There are no remaining major differences between the local version when compared to the deployed version online.
 
 - - -
 
 ## Credits
 
-### Code Used
-
-**Template and Terminal**: [Python Essentials Template](https://github.com/Code-Institute-Org/python-essentials-template) provided by Code Institute
-
-
 ### Content
 
-The content for the application was written by myself. Some parts of this README were refined with the help of ChatGPT to improve clarity and phrasing.
+The main code and content for the application was written by myself. 
 
+Other helpful resources were as follows:
+
+
+| Source | Notes |
+| --- | --- |
+| [Markdown Builder](https://markdown.2bn.dev) | Help generating the Deployment section of this README |
+| [StackOverflow](https://stackoverflow.com/a/50921841) | Clear screen function in Python |
+| [ChatGPT](https://chatgpt.com) | Help with code logic and explanations as well as improving clarity and phrasing within the README|
+| [Python Essentials Template](https://github.com/Code-Institute-Org/python-essentials-template) | Template and Terminal provided by Code Institute |
+
+
+### Acknowledgements
+
+
+I would like to thank my Code Institute mentor, [Tim Nelson](https://www.github.com/TravelTimN) for giving me valuable feedback before submitting the project.
