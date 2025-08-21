@@ -140,7 +140,7 @@ def continue_trip():
             print(Fore.GREEN + Style.NORMAL + "Data is valid!\n")
             break
 
-    time.sleep(1)
+    time.sleep(2)
     clear()
     
     if yes_no_input == "yes":
@@ -153,10 +153,13 @@ def start_new_trip(expenses, sheet_manager):
     """
     Initialize new trip
     """
-    time.sleep(1)
+    print("✅  No trip found. Let's set up a new trip.")
+    input(
+        Style.BRIGHT + 
+        "\nPress ENTER to continue\n"
+        )
+    time.sleep(2)
     clear()
-
-    print("✅  No trip found. Let's set up a new trip.\n")
     # Get basic info for new trip
     new_trip_info = get_new_trip_info()
     # Set up Trip class and calculate trip_info values
@@ -164,6 +167,10 @@ def start_new_trip(expenses, sheet_manager):
     trip.update_trip_info()
     # Save new trip info to worksheet
     sheet_manager.update_worksheet(trip.trip_info, "trip_info")
+    input(
+            Style.BRIGHT + 
+            "\nPress ENTER to continue\n"
+            )
     time.sleep(2)
     clear()
     # Show trip summary
@@ -255,7 +262,7 @@ def add_expenses(trip, sheet_manager):
                     break
                 
             if yes_no_input == "no":
-                time.sleep(1)
+                time.sleep(2)
                 clear()
                 print("Okay, we will keep the old expense for this date.\n")
                 return  # Exit the method without changing anything
@@ -307,6 +314,10 @@ def add_expenses(trip, sheet_manager):
     sheet_manager.update_worksheet(trip.trip_info, "trip_info")
     sheet_manager.update_worksheet(trip.expenses, "expenses")
 
+    input(
+            Style.BRIGHT + 
+            "\nPress ENTER to continue\n"
+            )
     time.sleep(2)
     clear()
 
@@ -355,7 +366,10 @@ def main():
     Main function that runs all program functions
     """
     print(
-        "\nWelcome to Wander Wallet, your personal Travel Expense Tracker!\n"
+        "\nWelcome to Wander Wallet — Your Personal Travel Expense Tracker\n\n"
+        "This is a command-line app designed to help you plan and manage your " 
+        "trip budget.\nYou can create a trip, add your expenses and get " 
+        "real-time updates on your budget status.\n"
         )
     print(
         "⏳  Checking if you have already started tracking " 
@@ -374,12 +388,16 @@ def main():
     trip_exists_answer = trip_exists(trip_info)
     if trip_exists_answer:
         trip = Trip(trip_info, expenses)
-        time.sleep(1)
-        clear()
         print(
             f"✅  Seems like you have been working on your trip "
-            f"'{trip.trip_name}' already.\n"
+            f"'{trip.trip_name}' already."
             )
+        input(
+            Style.BRIGHT + 
+            "\nPress ENTER to continue\n"
+            )
+        time.sleep(2)
+        clear()
         # Show trip summary
         print(trip.summary())
         # Check if user wants to see a list of all currently tracked expenses
@@ -420,7 +438,7 @@ def main():
     get_new_expense_input = get_new_expense(trip, sheet_manager)
 
     if not get_new_expense_input:
-        time.sleep(1)
+        time.sleep(2)
         clear()
         # Check if user wants to see a list of all currently tracked expenses
         show_expenses_summary(trip)
@@ -431,7 +449,7 @@ def main():
             "\nPress ENTER to continue to your trip summary and "
             "end the program\n"
             )
-        time.sleep(1)
+        time.sleep(2)
         clear()
         # Show trip summary and then end the program
         print(trip.summary())

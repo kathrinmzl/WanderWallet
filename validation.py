@@ -26,7 +26,7 @@ def new_trip_info_valid(data_input, data_type):
             print(
                 Fore.RED + 
                 Style.NORMAL + 
-                f"\nInvalid data: {e}, please try again.\n"
+                f"Invalid data: {e}, please try again.\n"
                 )
             return False
         
@@ -79,7 +79,7 @@ def new_trip_info_valid(data_input, data_type):
             print(
                 Fore.RED +
                 Style.NORMAL + 
-                f"\nInvalid data: {e}, please try again.\n"
+                f"Invalid data: {e}, please try again.\n"
                 )
             return False
         
@@ -108,7 +108,7 @@ def int_input_valid(data_input):
         print(
             Fore.RED +
             Style.NORMAL + 
-            f"\nInvalid data: {e}, please try again.\n"
+            f"Invalid data: {e}, please try again.\n"
             )
         return False
     
@@ -130,7 +130,7 @@ def yes_no_input_valid(data_input):
         print(
             Fore.RED + 
             Style.NORMAL + 
-            f"\nInvalid data: {e}, please try again.\n"
+            f"Invalid data: {e}, please try again.\n"
             )
         return False
         
@@ -171,7 +171,7 @@ def expense_date_valid(date_input, trip):
         print(
             Fore.RED + 
             Style.NORMAL + 
-            f"\nInvalid data: {e}, please try again.\n"
+            f"Invalid data: {e}, please try again.\n"
             )
         return False
     
