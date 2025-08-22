@@ -6,6 +6,25 @@ from colorama import Fore, Style, init
 init(autoreset=True)
 
 
+def handle_validation_error(e):
+    """
+    Centralized error handler for validation functions.
+    Prints an error message when validation fails.
+
+    Args:
+        e (Exception): The validation error that was raised.
+
+    Returns:
+        bool: Always returns False to signal invalid input.
+    """
+    print(
+        Fore.RED +
+        Style.NORMAL +
+        f"Invalid data: {e}, please try again.\n"
+    )
+    return False
+
+
 def new_trip_info_valid(data_input, data_type):
     """
     Validate new trip information input depending on the type of data provided.
@@ -41,12 +60,7 @@ def new_trip_info_valid(data_input, data_type):
                     "and spaces"
                 )
         except ValueError as e:
-            print(
-                Fore.RED +
-                Style.NORMAL +
-                f"Invalid data: {e}, please try again.\n"
-                )
-            return False
+            return handle_validation_error(e)
 
         return True
 
@@ -94,12 +108,7 @@ def new_trip_info_valid(data_input, data_type):
                 )
 
         except ValueError as e:
-            print(
-                Fore.RED +
-                Style.NORMAL +
-                f"Invalid data: {e}, please try again.\n"
-                )
-            return False
+            return handle_validation_error(e)
 
         return True
 
@@ -137,12 +146,7 @@ def int_input_valid(data_input):
                 "The value must be larger than 0"
             )
     except ValueError as e:
-        print(
-            Fore.RED +
-            Style.NORMAL +
-            f"Invalid data: {e}, please try again.\n"
-            )
-        return False
+        return handle_validation_error(e)
 
     return True
 
@@ -170,12 +174,7 @@ def yes_no_input_valid(data_input):
                 f"'yes' or 'no' expected, you provided '{data_input_val}'"
                 )
     except ValueError as e:
-        print(
-            Fore.RED +
-            Style.NORMAL +
-            f"Invalid data: {e}, please try again.\n"
-            )
-        return False
+        return handle_validation_error(e)
 
     return True
 
@@ -224,11 +223,6 @@ def expense_date_valid(date_input, trip):
                 "Your expense date cannot be a future date"
             )
     except ValueError as e:
-        print(
-            Fore.RED +
-            Style.NORMAL +
-            f"Invalid data: {e}, please try again.\n"
-            )
-        return False
+        return handle_validation_error(e)
 
     return True
