@@ -296,6 +296,10 @@ def add_expenses(trip, sheet_manager):
             )
         print("Format: YYYY-MM-DD")
         print("Example: 2025-08-01")
+        print(
+            "\nNote: If you enter a date that already exists in the database, "
+            "then you\nyou will be able to update the expense for this date."
+            )
 
         date_input = input(
             Style.BRIGHT +
