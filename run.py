@@ -148,7 +148,7 @@ def continue_trip():
         print("If 'yes', you can add new expenses in the next step.")
         print(
             "If 'no', the current trip will be deleted and you can start a "
-            "new trip in the next step."
+            "new trip in\nthe next step."
             )
 
         yes_no_input = input(
@@ -259,6 +259,9 @@ def get_new_expense(trip, sheet_manager):
             # Validate input
             if yes_no_input_valid(yes_no_input):
                 print(Fore.GREEN + Style.NORMAL + "Data is valid!\n")
+                # Small pause + clear screen for better UX
+                time.sleep(2)
+                clear()
                 break
 
         if yes_no_input == "no":
