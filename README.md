@@ -116,6 +116,7 @@ When the application is launched, it displays a welcome message that introduces 
 If a trip exists, the user is shown a summary of their current trip, including budget, expenses and remaining funds.
 
 ![Start Screen with existing trip](docs/features/start-screen-existing-trip.png)
+![Start Screen with existing trip](docs/features/start-screen-existing-trip-summary.png)
 
 If no trip is found, the user is informed about this and will be prompted to create a new trip in the next step.
 
@@ -254,9 +255,9 @@ If the user chooses yes, the full list of expenses is displayed before the progr
 
 If the user chooses no, the program ends immediately.
 
-When the program ends, the user is thanked for using Wander Wallet. A final summary of the trip is displayed, showing the budget, total expenses, remaining funds and whether the user is currently under or over budget.
+When the program ends a final summary of the trip is displayed, showing the budget, total expenses, remaining funds and whether the user is currently under or over budget.
 
-Finally, the user is reminded that they can return to the app at any time to add more expenses to their trip or set up a new one.
+Finally, the user is thanked for using Wander Wallet and reminded that they can return to the app at any time to add more expenses to their trip or set up a new one.
 
 ![End of program](docs/features/end-of-programm.png)
 
