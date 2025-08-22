@@ -128,7 +128,7 @@ def int_input_valid(data_input):
             int_input = int(data_input)
         except ValueError:
             raise ValueError(
-                "Your input is not a whole number"
+                f"Your input '{data_input}' is not a whole number"
                 )
 
         # Check if provided integer is positive
