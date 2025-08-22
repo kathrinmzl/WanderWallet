@@ -30,8 +30,7 @@ class SheetManager:
 
     def get_worksheet_dict(self, worksheet_name: str) -> dict:
         """
-        Return worksheet data as a dict with header names as keys and
-        column values as lists.
+        Retrieve all data from a worksheet and return it as a dictionary.
         """
         # Open the specific worksheet by name
         sheet = self.sheet.worksheet(worksheet_name)
@@ -50,7 +49,7 @@ class SheetManager:
             # Extract column headers ['date', 'amount']
             keys = sheet_list[0]
             # Extract all data rows
-            # e.g. [['2025-08-20', '12'], ['2025-08-20', '34']]
+            # e.g. [['2025-08-20', '12'], ['2025-08-21', '34']]
             rows = sheet_list[1:]
             # Create dict with list comprehensions
             sheet_dict = {
@@ -81,7 +80,7 @@ class SheetManager:
         sheet = self.sheet.worksheet(worksheet_name)
         # First delete old data
         n_rows = sheet.row_count
-        # delete_rows only works if the rows actually exist
+        # Delete_rows only works if the rows actually exist
         if n_rows >= 2:
             sheet.delete_rows(2, n_rows)
         # Then add new data
