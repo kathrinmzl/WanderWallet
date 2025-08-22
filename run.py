@@ -264,12 +264,6 @@ def get_new_expense(trip, sheet_manager):
         if yes_no_input == "no":
             break
 
-    # Return decision as boolean
-    if yes_no_input == "yes":
-        return True
-    else:
-        return False
-
 
 def add_expenses(trip, sheet_manager):
     """
@@ -466,9 +460,10 @@ def main():
     # Welcome Message
     print(
         "\nWelcome to Wander Wallet — Your Personal Travel Expense Tracker\n\n"
-        "This is a command-line app designed to help you plan and manage your "
-        "trip budget.\nYou can create a trip, add your expenses and get "
-        "real-time updates on your budget status.\n"
+        "This is a command-line app designed to help you manage your travel "
+        "budget\nwhile you're on your trip.\nYou can track expenses day by "
+        "day and get real-time updates on how your spending\naligns with "
+        "your budget.\n"
         )
     print(
         "⏳  Checking if you have already started tracking "
@@ -542,37 +537,36 @@ def main():
             )
 
     # Get new expense from user and check if they want to add another one
-    get_new_expense_input = get_new_expense(trip, sheet_manager)
+    get_new_expense(trip, sheet_manager)
 
-    # If user finished adding expenses
-    if not get_new_expense_input:  # TODO
-        # Small pause + clear screen for better UX
-        time.sleep(2)
-        clear()
-        # Check if user wants to see a list of all currently tracked expenses
-        show_expenses_summary(trip)
+    # Continue when user finished adding expenses
+    # Small pause + clear screen for better UX
+    time.sleep(2)
+    clear()
+    # Check if user wants to see a list of all currently tracked expenses
+    show_expenses_summary(trip)
 
-        # Add an empty input forcing the app to pause before showing the
-        # summary in the next step
-        input(
-            Style.BRIGHT +
-            "\nPress ENTER to continue to your trip summary and "
-            "end the program\n"
-            )
-        # Small pause + clear screen for better UX
-        time.sleep(2)
-        clear()
+    # Add an empty input forcing the app to pause before showing the
+    # summary in the next step
+    input(
+        Style.BRIGHT +
+        "\nPress ENTER to continue to your trip summary and "
+        "end the program\n"
+        )
+    # Small pause + clear screen for better UX
+    time.sleep(2)
+    clear()
 
-        # Show trip summary and then end the program
-        print(trip.summary())
-        print("\n🎉  Thank you for using Wander Wallet!\n")
-        print(
-            "Come back to this app to add some more expenses to "
-            "your trip or\nset up a new one! See you next time!\n\n"
-            )
-        print("End of program")
+    # Show trip summary and then end the program
+    print(trip.summary())
+    print("\n🎉  Thank you for using Wander Wallet!\n")
+    print(
+        "Come back to this app to add some more expenses to "
+        "your trip or\nset up a new one! See you next time!\n\n"
+        )
+    print("End of program")
 
-        return
+    return
 
 
 """
