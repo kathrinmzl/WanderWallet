@@ -6,12 +6,16 @@
 
 I have used the recommended [PEP8 CI Python Linter](https://pep8ci.herokuapp.com) to validate all of my Python files.
 
+Initially I had lines of code exceeding the recommended 79 characters, which I then restructured. Also there where some unnecessary whitespaces that I removed.
+
+The final results are as follows:
+
 | File | URL | Screenshot | Notes |
 | --- | --- | --- | --- |
-| [run.py](https://github.com/kathrinmzl/WanderWallet/blob/main/run.py) | [PEP8 CI Link](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/kathrinmzl/WanderWallet/main/run.py) | ![screenshot](docs/testing/code-validation/validation-run-py.png) | - |
-| [sheet_manager.py](https://github.com/kathrinmzl/WanderWallet/blob/main/sheet_manager.py) | [PEP8 CI Link](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/kathrinmzl/WanderWallet/main/sheet_manager.py) | ![screenshot](docs/testing/code-validation/validation-sheet-manager-py.png) | - |
-| [trip.py](https://github.com/kathrinmzl/WanderWallet/blob/main/trip.py) | [PEP8 CI Link](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/kathrinmzl/WanderWallet/main/trip.py) | ![screenshot](docs/testing/code-validation/validation-trip-py.png) | - |
-| [validation.py](https://github.com/kathrinmzl/WanderWallet/blob/main/validation.py) | [PEP8 CI Link](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/kathrinmzl/WanderWallet/main/validation.py) | ![screenshot](docs/testing/code-validation/validation-validation-py.png) | - |
+| [run.py](https://github.com/kathrinmzl/WanderWallet/blob/main/run.py) | [PEP8 CI Link](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/kathrinmzl/WanderWallet/main/run.py) | ![screenshot](docs/testing/code-validation/validation-run-py.png) | No errors found |
+| [sheet_manager.py](https://github.com/kathrinmzl/WanderWallet/blob/main/sheet_manager.py) | [PEP8 CI Link](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/kathrinmzl/WanderWallet/main/sheet_manager.py) | ![screenshot](docs/testing/code-validation/validation-sheet-manager-py.png) | No errors found |
+| [trip.py](https://github.com/kathrinmzl/WanderWallet/blob/main/trip.py) | [PEP8 CI Link](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/kathrinmzl/WanderWallet/main/trip.py) | ![screenshot](docs/testing/code-validation/validation-trip-py.png) | No errors found |
+| [validation.py](https://github.com/kathrinmzl/WanderWallet/blob/main/validation.py) | [PEP8 CI Link](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/kathrinmzl/WanderWallet/main/validation.py) | ![screenshot](docs/testing/code-validation/validation-validation-py.png) | No errors found |
 
 ## Defensive Programming
 
