@@ -6,35 +6,12 @@
 
 I have used the recommended [PEP8 CI Python Linter](https://pep8ci.herokuapp.com) to validate all of my Python files.
 
-TODO: Clear linter warnings, add screenshots, any notes? if not, remove
-
 | File | URL | Screenshot | Notes |
 | --- | --- | --- | --- |
-| [run.py](https://github.com/kathrinmzl/WanderWallet/blob/main/run.py) | [PEP8 CI Link](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/kathrinmzl/WanderWallet/main/run.py) | ![screenshot](documentation/validation/py--run.png) | ⚠️ Notes (if applicable) |
-| [sheet_manager.py](https://github.com/kathrinmzl/WanderWallet/blob/main/sheet_manager.py) | [PEP8 CI Link](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/kathrinmzl/WanderWallet/main/sheet_manager.py) | ![screenshot](documentation/validation/py--sheet_manager.png) | ⚠️ Notes (if applicable) |
-| [trip.py](https://github.com/kathrinmzl/WanderWallet/blob/main/trip.py) | [PEP8 CI Link](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/kathrinmzl/WanderWallet/main/trip.py) | ![screenshot](documentation/validation/py--trip.png) | ⚠️ Notes (if applicable) |
-| [validation.py](https://github.com/kathrinmzl/WanderWallet/blob/main/validation.py) | [PEP8 CI Link](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/kathrinmzl/WanderWallet/main/validation.py) | ![screenshot](documentation/validation/py--validation.png) | ⚠️ Notes (if applicable) |
-
-
-## Responsiveness
-
-TODO: Check in the end if time is still there, otherwise delete section
-
-I've tested my deployed project to check for responsiveness issues.
-
-| Mobile | Tablet | Desktop | Notes |
-| --- | --- | --- | --- |
-| ![screenshot](documentation/responsiveness/mobile-terminal.png) | ![screenshot](documentation/responsiveness/tablet-terminal.png) | ![screenshot](documentation/responsiveness/desktop-terminal.png) | Mobile issues: `overflow-x`, doesn't work on iPhones, but does work on Android with some limitations |
-
-## Browser Compatibility
-
-TODO: Check in the end if time is still there, otherwise delete section
-
-I've tested my deployed project on multiple browsers to check for compatibility issues.
-
-| Chrome | Firefox | Safari | Notes |
-| --- | --- | --- | --- |
-| ![screenshot](documentation/browsers/chrome-terminal.png) | ![screenshot](documentation/browsers/firefox-terminal.png) | ![screenshot](documentation/browsers/safari-terminal.png) | Chrome: work as expected. Firefox: emojis get cut-off. Safari: some limitations. |
+| [run.py](https://github.com/kathrinmzl/WanderWallet/blob/main/run.py) | [PEP8 CI Link](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/kathrinmzl/WanderWallet/main/run.py) | ![screenshot](docs/testing/code-validation/validation-run-py.png) | - |
+| [sheet_manager.py](https://github.com/kathrinmzl/WanderWallet/blob/main/sheet_manager.py) | [PEP8 CI Link](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/kathrinmzl/WanderWallet/main/sheet_manager.py) | ![screenshot](docs/testing/code-validation/validation-sheet-manager-py.png) | - |
+| [trip.py](https://github.com/kathrinmzl/WanderWallet/blob/main/trip.py) | [PEP8 CI Link](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/kathrinmzl/WanderWallet/main/trip.py) | ![screenshot](docs/testing/code-validation/validation-trip-py.png) | - |
+| [validation.py](https://github.com/kathrinmzl/WanderWallet/blob/main/validation.py) | [PEP8 CI Link](https://pep8ci.herokuapp.com/https://raw.githubusercontent.com/kathrinmzl/WanderWallet/main/validation.py) | ![screenshot](docs/testing/code-validation/validation-validation-py.png) | - |
 
 ## Defensive Programming
 
@@ -106,6 +83,6 @@ To this date, no known unfixed errors remain in the application, though, even af
 
 | Issue | Screenshot |
 | --- | --- |
-| If a user types `CTRL`+`C` in the terminal on the live site, they can manually stop the application and receive and error. | ![screenshot](docs/testing/known-issues/ctrl-c-issue.png) |
+| If a user types `CTRL`+`C` in the terminal on the live site, they can manually stop the application and receive an error. | ![screenshot](docs/testing/known-issues/ctrl-c-issue.png) |
 
 
