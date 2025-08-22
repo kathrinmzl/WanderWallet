@@ -14,18 +14,17 @@ The website was created for educational purposes only.
 ![GitHub top language](https://img.shields.io/github/languages/top/kathrinmzl/WanderWallet?color=green)
 [![badge](https://img.shields.io/badge/deployment-Heroku-purple)](https://wander-wallet-c4d586c6e78d.herokuapp.com)
 
-
 - - -
 
 ## User Experience (UX)
 
 ### Site Goals
 
-- Business Goals: Provide a simple and reliable tool for managing travel budgets directly from the command line
+- Business Goals: Provide a simple and reliable tool for managing travel budgets while being on a trip, directly from the command line
 
 - Users’ needs: Easily track trip expenses, stay on top of budgets and quickly understand whether they are spending within their limits
 
-- Primary user: Travelers who want a simple way to manage their trip finances
+- Primary user: Travelers who want a simple way to manage their trip finances while travelling
 
 ### User Stories
 
@@ -161,9 +160,11 @@ When all trip information has been provided successfully, additional data such a
 After that, the user can either start adding expenses to their trip, or the program will end if the trip has not started yet. This prevents adding expenses that have not occurred yet. In this case, the user is informed that they can return to the app once the trip begins.
 
 Trip has already started:
+
 ![New trip has started already](docs/features/new-trip-started.png)
 
 Trip has not started yet:
+
 ![New trip has not started yet](docs/features/new-trip-not-started.png)
 
 #### Working with an already existing trip
@@ -291,7 +292,7 @@ Instead of being guided strictly through the workflow, offer a menu at the start
 - *User accounts and login system*  
 Implement a simple authentication system so multiple users can store and access their own trips independently. This would allow different travelers to use the app at the same time without interfering with each other’s data.
 
-These features would significantly improve the overall user experience and make the application more powerful in supporting effective budget tracking.
+These features would further improve the overall user experience and make the application more powerful in supporting effective budget tracking.
 
 ## Testing
 
@@ -346,7 +347,16 @@ The program uses two classes as a blueprint for the project's object-oriented pr
 ```python
 class Trip:
     """
-    Trip class
+    Trip class that stores trip details (name, dates, budget, expenses),
+    calculates key trip statistics and provides a formatted summary of them.
+
+    Attributes:
+        trip_info (dict): Dictionary containing trip details
+        expenses (dict): Dictionary containing expense details
+        trip_name (str): Name of the trip
+        start_date (date): Trip start date
+        end_date (date): Trip end date
+        total_budget (int): Total budget allocated for the trip
     """
     def __init__(self, trip_info: dict, expenses: dict):
         self.trip_info = trip_info
@@ -366,22 +376,33 @@ The `Trip` class is the core data model of the app, designed to store trip detai
 ```python
 class SheetManager:
     """
-    Sheet Manager class
+    Manages interaction with a Google Spreadsheet.
+
+    This class handles authentication with the Google Sheets API and provides
+    methods to:
+    - Retrieve worksheet data as a dictionary
+    - Delete all worksheet data except headers
+    - Update worksheets with new trip or expense data
     """
     def __init__(self, creds_file: str, sheet_name: str):
+        # Define the scope of access for the Google Sheets API
         SCOPE = [
             "https://www.googleapis.com/auth/spreadsheets",
             "https://www.googleapis.com/auth/drive.file",
             "https://www.googleapis.com/auth/drive"
-            ]
+        ]
+        # Load service account credentials from the given file
         CREDS = Credentials.from_service_account_file(creds_file)
+        # Apply scope permissions to credentials
         SCOPED_CREDS = CREDS.with_scopes(SCOPE)
+        # Authorize gspread client with the scoped credentials
         self.client = gspread.authorize(SCOPED_CREDS)
+        # Open the Google Spreadsheet by name
         self.sheet = self.client.open(sheet_name)
 ```
 The `SheetManager` class handles all interactions with Google Sheets, making it easy to read, update and clear trip data from the connected spreadsheet. It separates storage logic from the main application, so the app can focus on budgeting features while this class reliably manages data access in the background.
 
-The primary functions used on this application are:
+The primary functions used in this application are:
 
 - Validation functions in `validation.py`
     - Check validaity of all user inputs. See [Error Handling](#error-handling) for more details.
@@ -575,11 +596,10 @@ Other helpful resources were as follows:
 | --- | --- |
 | [Markdown Builder](https://markdown.2bn.dev) | Help generating the Deployment and Testing section of this README |
 | [StackOverflow](https://stackoverflow.com/a/50921841) | Clear screen function in Python |
-| [ChatGPT](https://chatgpt.com) | Help with code logic and explanations as well as improving clarity and phrasing within the README|
+| [ChatGPT](https://chatgpt.com) | Help with code logic and explanations as well as improving clarity and phrasing within the README and function docstrings|
 | [Python Essentials Template](https://github.com/Code-Institute-Org/python-essentials-template) | Template and Terminal provided by Code Institute |
 
 
 ### Acknowledgements
-
 
 I would like to thank my Code Institute mentor, [Tim Nelson](https://www.github.com/TravelTimN) for giving me valuable feedback before submitting the project.
