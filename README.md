@@ -158,7 +158,7 @@ When all trip information has been provided successfully, additional data such a
 
 ![New trip summary](docs/features/new-trip-summary.png)
 
-After that, the user can either start adding expenses to their trip, or the program will end if the trip has not started yet. This prevents adding expenses that have not occurred yet. In this case, the user is informed that they can return to the app once the trip begins.
+After that, the user can either start adding expenses to their trip or the program will end if the trip has not started yet. This prevents adding expenses that have not occurred yet. In this case, the user is informed that they can return to the app once the trip begins.
 
 Trip has already started:
 
@@ -185,6 +185,10 @@ If "yes", it is checked if the trip has already started or not, like after setti
 If "no", the current trip will be deleted and the process continues with setting up a new trip, like described above.
 
 ![Existing trip not continue](docs/features/existing-trip-continue-input-no.png)
+
+It is also possible, that the trip that's currently tracked in the database is already over. If the user opens a past trip, they will be shown a respective status message before having to choose to continue with the trip or delete it. This way, a user is still able to update or add expenses for a trip that has just ended, in order to get the final summary statistics for their trip or they can decide to delete the old trip and start with a new one.
+
+![Existing trip past trip](docs/features/existing-trip-past-trip.png)
 
 #### Adding expenses
 
@@ -262,7 +266,7 @@ Finally, the user is thanked for using Wander Wallet and reminded that they can 
 ![End of program](docs/features/end-of-programm.png)
 
 #### Error Handling
-Like mentioned above, all user inputs are validated, and clear messages are provided to inform the user about the expected format and type of input.
+As mentioned above, all user inputs are validated, and clear messages are provided to inform the user about the expected format and type of input.
 
 All input validation functions are organized in a dedicated validation.py file. There are four specific validation methods:
 
@@ -406,7 +410,7 @@ The `SheetManager` class handles all interactions with Google Sheets, making it 
 The primary functions used in this application are:
 
 - Validation functions in `validation.py`
-    - Check validaity of all user inputs. See [Error Handling](#error-handling) for more details.
+    - Check validity of all user inputs. See [Error Handling](#error-handling) for more details.
 - `trip_exists()`
     - Check if trip exists already
 - `get_new_trip_info()`
@@ -591,7 +595,6 @@ There are no remaining major differences between the local version when compared
 The main code and content for the application was written by myself. 
 
 Other helpful resources were as follows:
-
 
 | Source | Notes |
 | --- | --- |
