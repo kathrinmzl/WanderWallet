@@ -195,7 +195,7 @@ def start_new_trip(expenses, sheet_manager):
         )
 
     # Small pause + clear screen for better UX
-    time.sleep(2)
+    time.sleep(1)
     clear()
 
     # Get basic info for new trip (name, dates, budget)
@@ -213,7 +213,7 @@ def start_new_trip(expenses, sheet_manager):
             )
 
     # Small pause + clear screen for better UX
-    time.sleep(2)
+    time.sleep(1)
     clear()
 
     # Show trip summary
@@ -393,7 +393,7 @@ def add_expenses(trip, sheet_manager):
             )
 
     # Small pause + clear screen for better UX
-    time.sleep(2)
+    time.sleep(1)
     clear()
 
     # Print confirmation to user
@@ -502,7 +502,7 @@ def main():
             "\nPress ENTER to continue\n"
             )
         # Small pause + clear screen for better UX
-        time.sleep(2)
+        time.sleep(1)
         clear()
 
         # Show trip summary
@@ -535,7 +535,7 @@ def main():
         # No existing trip, start a new one
         trip = start_new_trip(expenses, sheet_manager)
 
-    # Check if the trip has already started, 
+    # Check if the trip has already started,
     # if not, end the program
     # if the trip is already over, don't show anything
     if trip.start_date > today:
@@ -572,7 +572,7 @@ def main():
         "end the program\n"
         )
     # Small pause + clear screen for better UX
-    time.sleep(2)
+    time.sleep(1)
     clear()
 
     # Show trip summary and then end the program
