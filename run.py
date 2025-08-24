@@ -515,7 +515,7 @@ def main():
             print("\nSeems like your trip is already over!")
             print(
                 "You can continue working on this trip, if you want to add "
-                "or update trip expenses,\nor you can decide to start a new "
+                "or update\ntrip expenses, or you can decide to start a new "
                 "trip."
                 )
 
