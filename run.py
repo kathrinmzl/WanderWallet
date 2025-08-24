@@ -510,6 +510,15 @@ def main():
         # Check if user wants to see a list of all currently tracked expenses
         show_expenses_summary(trip)
 
+        # Notify user if trip is already over
+        if trip.end_date < today:
+            print("\nSeems like your trip is already over!")
+            print(
+                "You can continue working on this trip, if you want to add "
+                "or update trip expenses,\nor you can decide to start a new "
+                "trip."
+                )
+
         # Ask if user wants to continue current trip
         continue_trip_val = continue_trip()
 
@@ -526,7 +535,9 @@ def main():
         # No existing trip, start a new one
         trip = start_new_trip(expenses, sheet_manager)
 
-    # Check if the trip has already started, if not, end the program
+    # Check if the trip has already started, 
+    # if not, end the program
+    # if the trip is already over, don't show anything
     if trip.start_date > today:
         print("🎉  Thank you for setting up your trip with Wander Wallet!\n")
         print("Your trip hasn't started yet.")
@@ -536,7 +547,7 @@ def main():
             )
         print("End of program")
         return
-    else:
+    elif trip.start_date <= today and today <= trip.end_date:
         print(
             f"Great! Your trip has already started "
             f"({trip.start_date} - {trip.end_date})!\n"
